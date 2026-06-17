@@ -43,6 +43,40 @@ export const HOME = {
     ctaPrimary: { fr: "Découvrir le projet", en: "Discover the project" },
     ctaSecondary: { fr: "Voir le GitHub", en: "View on GitHub" },
   },
+  promise: {
+    eyebrow: { fr: "FARO / Alerte précoce", en: "FARO / Early warning" },
+    title: {
+      fr: "Détecter avant que le feu ne soit visible.",
+      en: "Detect before the fire becomes visible.",
+    },
+    text: {
+      fr: "Les systèmes classiques repèrent souvent les incendies lorsqu'ils sont déjà installés. FARO vise l'alerte ultra-précoce : mesurer le terrain en continu, détecter les signaux faibles et transmettre l'information sans dépendre d'Internet.",
+      en: "Classic systems often detect wildfires once they are already established. FARO targets ultra-early alerts: continuously measure the field, detect weak signals and transmit information without depending on the Internet.",
+    },
+    cards: [
+      {
+        title: { fr: "Problème", en: "Problem" },
+        text: {
+          fr: "Satellites et tours de guet peuvent arriver trop tard, surtout au tout début d'un feu.",
+          en: "Satellites and watchtowers can react too late, especially during the earliest phase of a fire.",
+        },
+      },
+      {
+        title: { fr: "Solution FARO", en: "FARO solution" },
+        text: {
+          fr: "Un réseau de capteurs autonomes place l'intelligence directement sur le terrain, au plus près du risque.",
+          en: "A network of autonomous sensor nodes brings intelligence directly into the field, close to the risk.",
+        },
+      },
+      {
+        title: { fr: "Objectif", en: "Goal" },
+        text: {
+          fr: "Aider les équipes à comprendre où le feu peut se propager dans les prochaines minutes.",
+          en: "Help response teams understand where the fire may spread in the next few minutes.",
+        },
+      },
+    ],
+  },
   metrics: [
     {
       value: "~500 000",
@@ -124,6 +158,20 @@ export const HOME = {
       },
     ],
   },
+  demo: {
+    eyebrow: { fr: "Capteur / IA / Maillage / Carte", en: "Sensor / AI / Mesh / Map" },
+    title: { fr: "Une chaîne complète, du capteur à la carte.", en: "A complete chain, from sensor to map." },
+    text: {
+      fr: "FARO ne se limite pas à déclencher une alerte : le projet relie électronique embarquée, réseau radio, IA locale et visualisation cartographique pour transformer une anomalie terrain en information exploitable.",
+      en: "FARO does more than trigger an alert: the project connects embedded electronics, radio networking, local AI and map visualisation to turn a field anomaly into actionable information.",
+    },
+    items: [
+      { value: "BME688", label: { fr: "mesures environnementales", en: "environmental sensing" } },
+      { value: "LoRa", label: { fr: "transmission sans Internet", en: "Internet-free transmission" } },
+      { value: "IA", label: { fr: "détection embarquée", en: "on-device detection" } },
+      { value: "GeoJSON", label: { fr: "export cartographique", en: "map-ready export" } },
+    ],
+  },
   video: {
     placeholder: { fr: "Insérer ici la vidéo du projet", en: "Project video to be inserted here" },
     caption: { fr: "Voir FARO en action.", en: "See FARO in action." },
@@ -147,6 +195,17 @@ export const PROJECT = {
   intro: {
     fr: "FARO repose sur cinq couches techniques développées indépendamment puis intégrées dans une seule chaîne cohérente : du capteur jusqu'à la carte de propagation.",
     en: "FARO is built on five technical layers, developed independently and then integrated into a single coherent chain: from sensor to propagation map.",
+  },
+  chain: {
+    title: { fr: "La chaîne de détection", en: "Detection chain" },
+    eyebrow: { fr: "Pipeline complet", en: "End-to-end pipeline" },
+    items: [
+      { fr: "Capteur", en: "Sensor" },
+      { fr: "IA locale", en: "Local AI" },
+      { fr: "Réseau LoRa", en: "LoRa network" },
+      { fr: "Alerte", en: "Alert" },
+      { fr: "Carte prédictive", en: "Predictive map" },
+    ],
   },
   layers: [
     {
@@ -254,6 +313,10 @@ export const ARCH = {
     },
   ],
   deployVideo: { fr: "Insérer ici la vidéo de déploiement terrain", en: "Field deployment video to be inserted here" },
+  antennaWarning: {
+    fr: "Antenne obligatoire avant la mise sous tension.",
+    en: "Antenna required before power-on.",
+  },
 };
 
 /* ---------- TEAM ---------- */
@@ -370,4 +433,9 @@ export const UI = {
   langSwitch: { fr: "Langue", en: "Language" },
   openMenu: { fr: "Ouvrir le menu", en: "Open menu" },
   closeMenu: { fr: "Fermer le menu", en: "Close menu" },
+  layer: { fr: "Couche", en: "Layer" },
+  mediaReplace: {
+    fr: "Remplacer ce bloc par votre fichier quand il sera prêt.",
+    en: "Replace this block with your file when ready.",
+  },
 };

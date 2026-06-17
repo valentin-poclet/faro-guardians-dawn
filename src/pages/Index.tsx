@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Github, Flame, Radio, Brain, MapPinned } from "lucide-react";
+import { ArrowRight, Github, Flame, Brain, MapPinned, AlertTriangle, ShieldCheck, Target, Cpu } from "lucide-react";
 import { PageLayout } from "@/components/faro/PageLayout";
 import { MediaPlaceholder } from "@/components/faro/MediaPlaceholder";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { BRAND, HOME, LINKS } from "@/content/i18n";
 import heroImg from "@/assets/hero-forest.jpg";
 
 const pillarIcons = [Flame, Brain, MapPinned];
+const promiseIcons = [AlertTriangle, ShieldCheck, Target];
 
 export default function Index() {
   const { t } = useLang();
@@ -69,6 +70,48 @@ export default function Index() {
               }}
             />
           ))}
+        </div>
+      </section>
+
+      {/* PROMISE */}
+      <section className="border-y border-border/60 bg-secondary/20">
+        <div className="container grid gap-10 py-20 md:grid-cols-[0.9fr_1.1fr] md:items-center md:py-28">
+          <div className="reveal">
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+              {t(HOME.promise.eyebrow)}
+            </p>
+            <h2 className="font-display text-3xl font-bold leading-tight md:text-5xl">
+              {t(HOME.promise.title)}
+            </h2>
+            <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground md:text-lg">
+              {t(HOME.promise.text)}
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {HOME.promise.cards.map((card, i) => {
+              const Icon = promiseIcons[i] ?? Target;
+              return (
+                <article
+                  key={i}
+                  className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-card transition-all duration-500 hover:border-accent/50"
+                >
+                  <div className="absolute -right-12 -top-16 h-36 w-36 rounded-full bg-gradient-glow opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="relative flex gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <h3 className="font-display text-xl font-semibold">{t(card.title)}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground md:text-base">
+                        {t(card.text)}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -140,6 +183,46 @@ export default function Index() {
                 </article>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* DEMO CHAIN */}
+      <section className="border-t border-border/60 bg-secondary/20">
+        <div className="container grid gap-10 py-24 md:grid-cols-[1fr_0.9fr] md:items-center md:py-32">
+          <div>
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+              {t(HOME.demo.eyebrow)}
+            </p>
+            <h2 className="max-w-2xl font-display text-3xl font-bold md:text-5xl">
+              {t(HOME.demo.title)}
+            </h2>
+            <p className="mt-5 max-w-2xl leading-relaxed text-muted-foreground md:text-lg">
+              {t(HOME.demo.text)}
+            </p>
+          </div>
+
+          <div className="relative rounded-2xl border border-border/70 bg-card p-6 shadow-card">
+            <div className="absolute inset-0 bg-grid opacity-20" />
+            <div className="relative grid gap-3">
+              {HOME.demo.items.map((item, i) => (
+                <div
+                  key={item.value}
+                  className="flex items-center justify-between gap-4 rounded-xl border border-border/70 bg-background/60 px-4 py-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
+                      <Cpu className="h-4 w-4" />
+                    </span>
+                    <span className="font-display font-semibold">{item.value}</span>
+                  </div>
+                  <span className="text-right text-sm text-muted-foreground">{t(item.label)}</span>
+                  {i < HOME.demo.items.length - 1 && (
+                    <span className="absolute left-[2.35rem] mt-16 h-3 w-px bg-accent/40" />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

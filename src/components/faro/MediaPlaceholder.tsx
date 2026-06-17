@@ -1,5 +1,7 @@
 import { Film, ImageIcon, Network } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/i18n/LanguageContext";
+import { UI } from "@/content/i18n";
 
 type Variant = "video" | "image" | "diagram";
 
@@ -18,6 +20,7 @@ export function MediaPlaceholder({
   aspect?: "video" | "wide" | "square";
   className?: string;
 }) {
+  const { t } = useLang();
   const Icon = ICONS[variant];
   const aspectClass =
     aspect === "video" ? "aspect-video" : aspect === "wide" ? "aspect-[21/9]" : "aspect-square";
@@ -37,6 +40,9 @@ export function MediaPlaceholder({
           </span>
           <p className="font-display text-sm uppercase tracking-[0.25em] text-muted-foreground">
             {label}
+          </p>
+          <p className="max-w-sm text-xs leading-relaxed text-muted-foreground/70">
+            {t(UI.mediaReplace)}
           </p>
         </div>
       </div>

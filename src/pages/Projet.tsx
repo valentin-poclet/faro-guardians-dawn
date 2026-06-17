@@ -1,8 +1,8 @@
-import { Github, ExternalLink } from "lucide-react";
+import { ArrowRight, Github, ExternalLink } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
-import { PROJECT, LINKS } from "@/content/i18n";
+import { PROJECT, LINKS, UI } from "@/content/i18n";
 
 export default function Projet() {
   const { t } = useLang();
@@ -14,6 +14,35 @@ export default function Projet() {
         subtitle={t(PROJECT.intro)}
       />
 
+      <section className="border-b border-border/60 bg-secondary/20">
+        <div className="container py-12 md:py-16">
+          <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <h2 className="font-display text-2xl font-semibold md:text-3xl">
+              {t(PROJECT.chain.title)}
+            </h2>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              {t(PROJECT.chain.eyebrow)}
+            </p>
+          </div>
+          <ol className="grid gap-3 md:grid-cols-5">
+            {PROJECT.chain.items.map((item, i) => (
+              <li
+                key={i}
+                className="relative rounded-xl border border-border/70 bg-card p-4 shadow-card"
+              >
+                <span className="font-mono text-xs text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-2 font-display text-lg font-semibold">{t(item)}</p>
+                {i < PROJECT.chain.items.length - 1 && (
+                  <ArrowRight className="absolute -right-5 top-1/2 z-10 hidden h-5 w-5 -translate-y-1/2 text-accent md:block" />
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       <section className="container py-20 md:py-28">
         <ol className="space-y-12 md:space-y-20">
           {PROJECT.layers.map((layer, idx) => (
@@ -23,7 +52,7 @@ export default function Projet() {
             >
               <div className="flex flex-col gap-2 md:sticky md:top-28 md:self-start">
                 <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
-                  Layer {layer.n}
+                  {t(UI.layer)} {layer.n}
                 </span>
                 <span className="font-mono text-5xl font-bold text-gradient-ember md:text-7xl">
                   {layer.n}

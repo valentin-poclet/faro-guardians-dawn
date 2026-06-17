@@ -48,7 +48,7 @@ export default function Architecture() {
                   {isLora && (
                     <p className="mt-1 flex items-start gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive-foreground">
                       <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                      <span>Antenna required before power-on.</span>
+                      <span>{t(ARCH.antennaWarning)}</span>
                     </p>
                   )}
                 </article>
