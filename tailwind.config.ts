@@ -22,6 +22,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -38,6 +39,7 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          glow: "hsl(var(--accent-glow))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -57,6 +59,22 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        display: ['"Space Grotesk"', "system-ui", "sans-serif"],
+        sans: ['"Inter"', "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+      },
+      backgroundImage: {
+        "gradient-ember": "var(--gradient-ember)",
+        "gradient-forest": "var(--gradient-forest)",
+        "gradient-hero-fade": "var(--gradient-hero-fade)",
+        "gradient-glow": "var(--gradient-glow)",
+      },
+      boxShadow: {
+        ember: "var(--shadow-ember)",
+        deep: "var(--shadow-deep)",
+        card: "var(--shadow-card)",
       },
       borderRadius: {
         lg: "var(--radius)",
