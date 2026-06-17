@@ -1,15 +1,17 @@
-import { ArrowRight, Github, ExternalLink } from "lucide-react";
+import { ArrowRight, Github, ExternalLink, UserCheck, ScanSearch, RadioTower, AlertCircle } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
 import { PROJECT, LINKS, UI } from "@/content/i18n";
+
+const ethicsIcons = [UserCheck, ScanSearch, RadioTower];
 
 export default function Projet() {
   const { t } = useLang();
   return (
     <PageLayout>
       <PageHero
-        eyebrow="01 — Projet"
+        eyebrow={t({ fr: "01 — Projet", en: "01 — Project" })}
         title={t(PROJECT.title)}
         subtitle={t(PROJECT.intro)}
       />
@@ -93,6 +95,47 @@ export default function Projet() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="border-t border-border/60 bg-secondary/20">
+        <div className="container py-20 md:py-28">
+          <div className="max-w-3xl">
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+              {t(PROJECT.ethics.eyebrow)}
+            </p>
+            <h2 className="font-display text-3xl font-bold leading-tight md:text-5xl">
+              {t(PROJECT.ethics.title)}
+            </h2>
+            <p className="mt-5 leading-relaxed text-muted-foreground md:text-lg">
+              {t(PROJECT.ethics.intro)}
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {PROJECT.ethics.principles.map((principle, index) => {
+              const Icon = ethicsIcons[index] ?? UserCheck;
+              return (
+                <article key={index} className="rounded-xl border border-border/70 bg-card p-6 shadow-card">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-5 font-display text-xl font-semibold">{t(principle.title)}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t(principle.text)}</p>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="mt-6 flex items-start gap-4 rounded-xl border border-accent/30 bg-accent/10 p-5 md:p-6">
+            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+            <div>
+              <h3 className="font-display text-lg font-semibold">{t(PROJECT.ethics.limitTitle)}</h3>
+              <p className="mt-2 max-w-4xl text-sm leading-relaxed text-muted-foreground md:text-base">
+                {t(PROJECT.ethics.limitText)}
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="border-t border-border/60 bg-secondary/30">

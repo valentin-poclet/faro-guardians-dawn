@@ -2,7 +2,7 @@
 
 Site vitrine bilingue du projet FARO, realise par six etudiants ingenieurs de 3e annee a ESIEE Paris.
 
-Le site presente le projet a un jury, a des visiteurs de stand et a des personnes non specialistes : detection ultra-precoce des feux de foret, reseau LoRa maille, IA embarquee et simulation predictive de propagation.
+Le site presente le projet a un jury, a des visiteurs de stand et a des personnes non specialistes : detection precoce des feux de foret, reseau LoRa maille, IA embarquee et simulation predictive de propagation.
 
 ## Lancer le site en local
 
@@ -69,6 +69,15 @@ Les pages principales sont dans :
 ```text
 src/pages/
 ```
+
+Le logo officiel et les documents telechargeables sont places dans :
+
+```text
+public/faro-logo.png
+public/documents/
+```
+
+Pour une video de plusieurs minutes, preferer un lecteur YouTube non repertorie ou un lien Drive integre afin de ne pas alourdir le depot GitHub.
 
 ## Pages du site
 

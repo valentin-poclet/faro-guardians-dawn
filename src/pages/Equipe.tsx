@@ -14,7 +14,7 @@ export default function Equipe() {
   const { t } = useLang();
   return (
     <PageLayout>
-      <PageHero eyebrow="03 — Équipe" title={t(TEAM.title)} subtitle={t(TEAM.subtitle)} />
+      <PageHero eyebrow={t({ fr: "03 — Équipe", en: "03 — Team" })} title={t(TEAM.title)} subtitle={t(TEAM.subtitle)} />
 
       <section className="container py-20 md:py-28">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

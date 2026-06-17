@@ -1,4 +1,4 @@
-import { Github, ExternalLink, Film } from "lucide-react";
+import { Github, ExternalLink, Film, FileText, Package } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
 import { MediaPlaceholder } from "@/components/faro/MediaPlaceholder";
@@ -7,9 +7,15 @@ import { RESOURCES } from "@/content/i18n";
 
 export default function Ressources() {
   const { t } = useLang();
+  const resourceIcon = (kind: string) => {
+    if (kind === "github") return <Github />;
+    if (kind === "report") return <FileText />;
+    if (kind === "bom") return <Package />;
+    return <ExternalLink />;
+  };
   return (
     <PageLayout>
-      <PageHero eyebrow="04 — Ressources" title={t(RESOURCES.title)} subtitle={t(RESOURCES.intro)} />
+      <PageHero eyebrow={t({ fr: "04 — Ressources", en: "04 — Resources" })} title={t(RESOURCES.title)} subtitle={t(RESOURCES.intro)} />
 
       <section className="container py-20 md:py-28">
         <div className="grid gap-6">
@@ -41,7 +47,7 @@ export default function Ressources() {
               {b.kind !== "video" && (
                 <Button asChild variant="ember" size="lg">
                   <a href={b.href} target="_blank" rel="noreferrer">
-                    {b.kind === "github" ? <Github /> : <ExternalLink />}
+                    {resourceIcon(b.kind)}
                     {t(b.cta)}
                   </a>
                 </Button>

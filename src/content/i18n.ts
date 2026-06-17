@@ -33,12 +33,16 @@ export const HOME = {
   hero: {
     eyebrow: { fr: "Fire Area Risk Observatory", en: "Fire Area Risk Observatory" },
     title: {
-      fr: "60 secondes pour sauver une forêt.",
-      en: "60 seconds to save a forest.",
+      fr: "Détecter plus tôt. Décider avec plus de contexte.",
+      en: "Detect earlier. Decide with better context.",
     },
     subtitle: {
-      fr: "FARO est un système de détection ultra-précoce des feux de forêt combinant capteurs IoT, IA embarquée, réseau LoRa maillé et simulation prédictive de propagation.",
-      en: "FARO is an ultra-early wildfire detection system combining IoT sensors, on-device AI, a LoRa mesh radio network and predictive fire-propagation simulation.",
+      fr: "FARO est un démonstrateur de détection précoce des feux de forêt combinant capteurs environnementaux, IA embarquée, réseau LoRa maillé et simulation prédictive de propagation.",
+      en: "FARO is an early wildfire detection demonstrator combining environmental sensors, on-device AI, a LoRa mesh network and predictive fire-spread simulation.",
+    },
+    status: {
+      fr: "Prototype étudiant — données campus — validation terrain nécessaire",
+      en: "Student prototype — campus data — field validation required",
     },
     ctaPrimary: { fr: "Découvrir le projet", en: "Discover the project" },
     ctaSecondary: { fr: "Voir le GitHub", en: "View on GitHub" },
@@ -46,12 +50,12 @@ export const HOME = {
   promise: {
     eyebrow: { fr: "FARO / Alerte précoce", en: "FARO / Early warning" },
     title: {
-      fr: "Détecter avant que le feu ne soit visible.",
-      en: "Detect before the fire becomes visible.",
+      fr: "Viser l'alerte avant que le feu ne soit clairement visible.",
+      en: "Aim to alert before the fire becomes clearly visible.",
     },
     text: {
-      fr: "Les systèmes classiques repèrent souvent les incendies lorsqu'ils sont déjà installés. FARO vise l'alerte ultra-précoce : mesurer le terrain en continu, détecter les signaux faibles et transmettre l'information sans dépendre d'Internet.",
-      en: "Classic systems often detect wildfires once they are already established. FARO targets ultra-early alerts: continuously measure the field, detect weak signals and transmit information without depending on the Internet.",
+      fr: "Les systèmes classiques repèrent souvent les incendies lorsqu'ils sont déjà installés. FARO explore une alerte plus précoce : mesurer le terrain en continu, détecter les signaux faibles et transmettre l'information sans dépendre d'Internet.",
+      en: "Classic systems often detect wildfires once they are already established. FARO explores earlier warning: continuously measure the field, detect weak signals and transmit information without depending on the Internet.",
     },
     cards: [
       {
@@ -79,31 +83,43 @@ export const HOME = {
   },
   metrics: [
     {
-      value: "~500 000",
-      unit: { fr: "hectares", en: "hectares" },
+      value: "5 s",
+      unit: { fr: "entre les mesures", en: "between readings" },
       label: {
-        fr: "brûlés en Europe chaque année",
-        en: "burned across Europe every year",
+        fr: "pour suivre l'évolution de l'environnement au niveau du nœud",
+        en: "to monitor environmental changes at node level",
       },
     },
     {
-      value: "< 2 min",
-      unit: { fr: "délai d'alerte", en: "alert delay" },
+      value: "868 MHz",
+      unit: { fr: "bande radio", en: "radio band" },
       label: {
-        fr: "visé par le système FARO",
-        en: "targeted by the FARO system",
+        fr: "pour une communication LoRa autonome, sans abonnement",
+        en: "for autonomous LoRa communication with no subscription",
+      },
+    },
+    {
+      value: "0",
+      unit: { fr: "action automatique", en: "automatic action" },
+      label: {
+        fr: "l'opérateur conserve la décision finale après chaque alerte",
+        en: "the operator keeps final authority after every alert",
       },
     },
   ],
   how: {
     title: { fr: "Comment ça fonctionne ?", en: "How it works" },
+    eyebrow: {
+      fr: "Mesurer / Analyser / Transmettre / Simuler",
+      en: "Measure / Analyse / Transmit / Simulate",
+    },
     steps: [
       {
         n: "01",
         title: { fr: "Mesurer", en: "Measure" },
         text: {
-          fr: "Température, humidité, gaz, lumière et qualité de l'air sont mesurés en continu par des capteurs autonomes alimentés par panneaux solaires.",
-          en: "Temperature, humidity, gases, light and air quality are measured continuously by autonomous sensors powered by solar panels.",
+          fr: "Le BME688 mesure la température, l'humidité, la pression et les variations de qualité de l'air. Le prototype associe batteries LiPo et chaîne de recharge solaire.",
+          en: "The BME688 measures temperature, humidity, pressure and air-quality variations. The prototype combines LiPo batteries with a solar charging chain.",
         },
       },
       {
@@ -118,8 +134,8 @@ export const HOME = {
         n: "03",
         title: { fr: "Transmettre", en: "Transmit" },
         text: {
-          fr: "L'alerte est envoyée via un réseau radio LoRa maillé sur plusieurs kilomètres, sans Internet.",
-          en: "The alert travels through a multi-kilometer LoRa mesh radio network, with no Internet required.",
+          fr: "L'alerte est relayée par un réseau radio LoRa maillé, sans Internet ni compte en ligne.",
+          en: "The alert is relayed through a LoRa mesh radio network, without Internet access or an online account.",
         },
       },
       {
@@ -138,8 +154,8 @@ export const HOME = {
       {
         title: { fr: "Détecter", en: "Detect" },
         text: {
-          fr: "Un réseau maillé de capteurs LoRa déployés sur le terrain mesure en temps réel la température, l'humidité, la qualité de l'air, les gaz et la fumée.",
-          en: "A field-deployed LoRa mesh network measures temperature, humidity, air quality, gases and smoke in real time.",
+          fr: "Un réseau maillé de nœuds LoRa mesure la température, l'humidité, la pression et les variations de qualité de l'air.",
+          en: "A mesh network of LoRa nodes measures temperature, humidity, pressure and air-quality variations.",
         },
       },
       {
@@ -249,6 +265,45 @@ export const PROJECT = {
       },
     },
   ],
+  ethics: {
+    eyebrow: { fr: "Conception responsable", en: "Responsible design" },
+    title: {
+      fr: "Un outil d'aide à la décision, jamais un remplacement de l'humain.",
+      en: "A decision-support tool, never a replacement for people.",
+    },
+    intro: {
+      fr: "L'analyse éthique n'est pas restée théorique : elle a directement fait évoluer l'interface, le protocole radio et les limites assumées du prototype.",
+      en: "The ethical review was not merely theoretical: it directly changed the interface, radio protocol and stated limits of the prototype.",
+    },
+    principles: [
+      {
+        title: { fr: "Décision humaine", en: "Human decision" },
+        text: {
+          fr: "FARO signale une anomalie et fournit du contexte. Un opérateur qualifié décide toujours de la suite à donner à l'alerte.",
+          en: "FARO reports an anomaly and provides context. A qualified operator always decides what action should follow.",
+        },
+      },
+      {
+        title: { fr: "Alerte plus lisible", en: "More transparent alerts" },
+        text: {
+          fr: "Le score numérique d'anomalie accompagne le niveau d'alerte afin de ne pas réduire l'IA à un simple voyant rouge opaque.",
+          en: "A numerical anomaly score accompanies the alert level so the AI is not reduced to an opaque red indicator.",
+        },
+      },
+      {
+        title: { fr: "Réseau accessible", en: "Accessible network" },
+        text: {
+          fr: "Le protocole LoRa autonome fonctionne sans 4G, abonnement commercial, application obligatoire ni compte en ligne.",
+          en: "The autonomous LoRa protocol works without 4G, a commercial subscription, a mandatory app or an online account.",
+        },
+      },
+    ],
+    limitTitle: { fr: "Une limite clairement documentée", en: "A clearly documented limitation" },
+    limitText: {
+      fr: "Le modèle a été entraîné avec des données collectées sur le campus. Il doit être recalibré et validé avec des professionnels avant tout déploiement réel en forêt.",
+      en: "The model was trained on data collected on campus. It must be recalibrated and validated with professionals before any real forest deployment.",
+    },
+  },
   resources: {
     title: { fr: "Ressources techniques", en: "Technical resources" },
     github: { fr: "GitHub — Simulation backend", en: "GitHub — Simulation backend" },
@@ -267,6 +322,42 @@ export const ARCH = {
   showcase: {
     fr: "Insérer ici les photos du boîtier et du prototype",
     en: "Enclosure & prototype photos to be inserted here",
+  },
+  inventory: {
+    eyebrow: { fr: "Nomenclature du prototype", en: "Prototype bill of materials" },
+    title: { fr: "Du matériel choisi pour construire et tester.", en: "Hardware selected to build and test." },
+    intro: {
+      fr: "Cette liste reprend la BOM réelle du projet. Elle distingue les éléments achetés des fonctions logicielles développées par l'équipe.",
+      en: "This list comes directly from the project's bill of materials. It separates purchased hardware from the software functions developed by the team.",
+    },
+    total: { fr: "194,34 € de matériel référencé", en: "€194.34 of listed hardware" },
+    items: [
+      {
+        qty: "×4",
+        name: "DFR1195",
+        detail: { fr: "Carte ESP32-S3 avec radio LoRa", en: "ESP32-S3 board with LoRa radio" },
+      },
+      {
+        qty: "×3",
+        name: "BME688 SEN0629",
+        detail: { fr: "Capteur environnemental pour l'analyse de l'air", en: "Environmental sensor for air analysis" },
+      },
+      {
+        qty: "×4",
+        name: "LiPo 3,7 V / 3000 mAh",
+        detail: { fr: "Batteries du prototype", en: "Prototype batteries" },
+      },
+      {
+        qty: "×1",
+        name: "SunFlower DFR0559",
+        detail: { fr: "Module de gestion solaire 5 V / 1 A", en: "5 V / 1 A solar power manager" },
+      },
+      {
+        qty: "×1",
+        name: "SOL3W",
+        detail: { fr: "Cellule solaire", en: "Solar cell" },
+      },
+    ],
   },
   components: [
     {
@@ -405,6 +496,26 @@ export const RESOURCES = {
       },
       cta: { fr: "Ouvrir Drive", en: "Open Drive" },
       href: "https://drive.google.com/drive/folders/1bvFLYfYpu_0ll0Z5LbygZBb9jzliP9hv?usp=sharing",
+    },
+    {
+      kind: "report",
+      title: { fr: "Rapport d'analyse éthique", en: "Ethical analysis report" },
+      desc: {
+        fr: "Choix de conception, contrôle humain, limites du modèle et équité territoriale : l'analyse qui a fait évoluer FARO.",
+        en: "Design choices, human oversight, model limitations and territorial equity: the review that changed FARO.",
+      },
+      cta: { fr: "Lire le rapport", en: "Read the report" },
+      href: "/documents/rapport-ethique-faro.pdf",
+    },
+    {
+      kind: "bom",
+      title: { fr: "BOM du prototype", en: "Prototype BOM" },
+      desc: {
+        fr: "La nomenclature des cartes, capteurs, batteries et éléments d'alimentation utilisés pour le prototype.",
+        en: "The list of boards, sensors, batteries and power components used for the prototype.",
+      },
+      cta: { fr: "Télécharger la BOM", en: "Download the BOM" },
+      href: "/documents/bom-faro.xlsx",
     },
     {
       kind: "video",

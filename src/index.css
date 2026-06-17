@@ -21,14 +21,14 @@ All colors MUST be HSL.
     --popover-foreground: 80 18% 92%;
 
     /* Forest green primary */
-    --primary: 150 55% 32%;
+    --primary: 165 34% 25%;
     --primary-foreground: 80 25% 96%;
-    --primary-glow: 150 70% 45%;
+    --primary-glow: 164 45% 42%;
 
     /* Amber/ember accent */
-    --accent: 28 95% 55%;
+    --accent: 18 87% 50%;
     --accent-foreground: 20 30% 8%;
-    --accent-glow: 22 100% 60%;
+    --accent-glow: 18 95% 58%;
 
     --secondary: 150 20% 12%;
     --secondary-foreground: 80 18% 92%;
@@ -119,5 +119,16 @@ All colors MUST be HSL.
     0% { transform: translateY(0) translateX(0); opacity: 0; }
     10% { opacity: 0.8; }
     100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal,
+  .ember-pulse,
+  [style*="float-particle"] {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
 }

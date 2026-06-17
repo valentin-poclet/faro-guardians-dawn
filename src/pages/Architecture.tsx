@@ -25,6 +25,33 @@ export default function Architecture() {
       </section>
 
       <section className="border-t border-border/60 bg-secondary/20">
+        <div className="container grid gap-12 py-20 md:grid-cols-[0.8fr_1.2fr] md:items-start md:py-28">
+          <div className="md:sticky md:top-28">
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+              {t(ARCH.inventory.eyebrow)}
+            </p>
+            <h2 className="font-display text-3xl font-bold leading-tight md:text-4xl">
+              {t(ARCH.inventory.title)}
+            </h2>
+            <p className="mt-5 leading-relaxed text-muted-foreground">{t(ARCH.inventory.intro)}</p>
+            <p className="mt-6 inline-flex rounded-full border border-accent/40 bg-accent/10 px-4 py-2 font-mono text-xs uppercase tracking-wider text-accent">
+              {t(ARCH.inventory.total)}
+            </p>
+          </div>
+
+          <ol className="divide-y divide-border/70 overflow-hidden rounded-xl border border-border/70 bg-card shadow-card">
+            {ARCH.inventory.items.map((item) => (
+              <li key={item.name} className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-1 p-5 md:grid-cols-[56px_180px_1fr] md:items-center md:p-6">
+                <span className="font-mono text-sm font-semibold text-accent">{item.qty}</span>
+                <strong className="font-display text-base md:text-lg">{item.name}</strong>
+                <span className="col-start-2 text-sm text-muted-foreground md:col-start-3">{t(item.detail)}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="border-t border-border/60 bg-secondary/20">
         <div className="container py-20 md:py-28">
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {ARCH.components.map((c, i) => {

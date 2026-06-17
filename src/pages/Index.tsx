@@ -38,6 +38,9 @@ export default function Index() {
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
               {t(HOME.hero.subtitle)}
             </p>
+            <p className="mt-5 inline-flex rounded-full border border-foreground/20 bg-background/40 px-4 py-2 font-mono text-[0.68rem] uppercase tracking-wider text-foreground/75 backdrop-blur-sm">
+              {t(HOME.hero.status)}
+            </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Button asChild variant="ember" size="xl">
                 <Link to="/projet">
@@ -117,7 +120,7 @@ export default function Index() {
 
       {/* METRICS */}
       <section className="border-y border-border/60 bg-secondary/30">
-        <div className="container grid gap-px overflow-hidden md:grid-cols-2">
+        <div className="container grid gap-px overflow-hidden md:grid-cols-3">
           {HOME.metrics.map((m, i) => (
             <div
               key={i}
@@ -144,7 +147,7 @@ export default function Index() {
             {t(HOME.how.title)}
           </h2>
           <p className="max-w-md font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
-            Mesurer / Analyser / Transmettre / Simuler
+            {t(HOME.how.eyebrow)}
           </p>
         </div>
         <ol className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
