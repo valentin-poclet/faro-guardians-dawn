@@ -35,15 +35,16 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        scrolled
-          ? "border-b border-border/60 bg-background/80 backdrop-blur-xl"
-          : "bg-transparent",
-      )}
-    >
-      <nav className="container flex h-16 items-center justify-between md:h-20">
+    <>
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+          scrolled
+            ? "border-b border-border/60 bg-background/80 backdrop-blur-xl"
+            : "bg-transparent",
+        )}
+      >
+        <nav className="container flex h-16 items-center justify-between md:h-20">
         <Link to="/" aria-label="FARO — home" onClick={() => setOpen(false)}>
           <Logo />
         </Link>
@@ -91,7 +92,8 @@ export function Navbar() {
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
-      </nav>
+        </nav>
+      </header>
 
       {/* Mobile menu */}
       <div
@@ -128,6 +130,6 @@ export function Navbar() {
           </li>
         </ul>
       </div>
-    </header>
+    </>
   );
 }

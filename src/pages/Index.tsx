@@ -229,6 +229,33 @@ export default function Index() {
         </div>
       </section>
 
+      {/* PROJECT VIDEO */}
+      <section className="container py-24 md:py-32">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+            {t(HOME.video.eyebrow)}
+          </p>
+          <h2 className="font-display text-3xl font-bold md:text-5xl">{t(HOME.video.title)}</h2>
+          <p className="mx-auto mt-5 max-w-2xl leading-relaxed text-muted-foreground md:text-lg">
+            {t(HOME.video.text)}
+          </p>
+        </div>
+        <figure className="mt-10 overflow-hidden rounded-xl border border-border/70 bg-card shadow-card">
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            poster="/media/project/faro-presentation-poster.jpg"
+            className="aspect-video w-full bg-black object-contain"
+          >
+            <source src="/media/project/faro-presentation.mp4" type="video/mp4" />
+          </video>
+          <figcaption className="border-t border-border/70 px-5 py-3 text-center text-sm text-muted-foreground">
+            {t(HOME.video.caption)}
+          </figcaption>
+        </figure>
+      </section>
+
       {/* TEAM TEASER */}
       <section className="border-t border-border/60 bg-secondary/30">
         <div className="container flex flex-col items-start gap-6 py-20 md:flex-row md:items-center md:justify-between md:py-28">

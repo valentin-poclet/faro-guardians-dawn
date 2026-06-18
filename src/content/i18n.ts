@@ -189,8 +189,16 @@ export const HOME = {
     ],
   },
   video: {
-    placeholder: { fr: "Insérer ici la vidéo du projet", en: "Project video to be inserted here" },
-    caption: { fr: "Voir FARO en action.", en: "See FARO in action." },
+    eyebrow: { fr: "Présentation vidéo", en: "Video presentation" },
+    title: { fr: "FARO, du concept au déploiement.", en: "FARO, from concept to deployment." },
+    text: {
+      fr: "Découvrez la conception du prototype, ses composants, son assemblage et son installation en environnement forestier.",
+      en: "Discover the prototype design, its components, assembly and installation in a forest environment.",
+    },
+    caption: {
+      fr: "Présentation du projet FARO - 2 min 21 s - son disponible.",
+      en: "FARO project presentation - 2 min 21 sec - sound available.",
+    },
   },
   teamTeaser: {
     title: {
@@ -598,6 +606,16 @@ export const RESOURCES = {
       },
       cta: { fr: "Ouvrir l'affiche", en: "Open the poster" },
       href: "/documents/affiche-faro-journee-projets.pdf",
+    },
+    {
+      kind: "projectVideo",
+      title: { fr: "Vidéo de présentation FARO", en: "FARO presentation video" },
+      desc: {
+        fr: "Une présentation de 2 min 21 s consacrée au prototype, à ses composants, à son assemblage et à son déploiement.",
+        en: "A 2 min 21 sec presentation covering the prototype, its components, assembly and deployment.",
+      },
+      cta: { fr: "Regarder la vidéo", en: "Watch the video" },
+      href: "/media/project/faro-presentation.mp4",
     },
   ] as const,
 };

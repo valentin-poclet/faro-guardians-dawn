@@ -1,4 +1,4 @@
-import { Github, ExternalLink, FileText, Package } from "lucide-react";
+import { Github, ExternalLink, FileText, Package, CirclePlay } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
@@ -10,6 +10,7 @@ export default function Ressources() {
     if (kind === "github") return <Github />;
     if (kind === "report" || kind === "poster") return <FileText />;
     if (kind === "bom") return <Package />;
+    if (kind === "projectVideo") return <CirclePlay />;
     return <ExternalLink />;
   };
   return (
