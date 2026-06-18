@@ -20,7 +20,7 @@ export function OfflineStatus() {
   if (!offline) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-[70] flex items-center gap-3 rounded-lg border border-accent/40 bg-background/95 px-4 py-3 text-sm shadow-deep backdrop-blur-xl sm:left-auto sm:max-w-md">
+    <div role="status" aria-live="polite" className="fixed bottom-4 left-4 right-4 z-[70] flex items-center gap-3 rounded-lg border border-accent/40 bg-background/95 px-4 py-3 text-sm shadow-deep backdrop-blur-xl sm:left-auto sm:max-w-md">
       <WifiOff className="h-4 w-4 shrink-0 text-accent" />
       <span>{t(UI.offline)}</span>
     </div>

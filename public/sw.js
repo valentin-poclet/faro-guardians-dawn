@@ -1,4 +1,4 @@
-const CACHE_NAME = "faro-site-v6";
+const CACHE_NAME = "faro-site-v7";
 const CORE_ASSETS = ["/", "/faro-logo.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {

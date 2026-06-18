@@ -4,6 +4,8 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { OfflineStatus } from "./OfflineStatus";
 import { ScrollProgress } from "./ScrollProgress";
+import { IntroSequence } from "./IntroSequence";
+import { AlertStatus } from "./AlertStatus";
 
 export function PageLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -12,6 +14,8 @@ export function PageLayout({ children }: { children: ReactNode }) {
   }, [pathname]);
   return (
     <div className="flex min-h-screen flex-col">
+      <IntroSequence />
+      <AlertStatus />
       <ScrollProgress />
       <Navbar />
       <main className="flex-1">{children}</main>

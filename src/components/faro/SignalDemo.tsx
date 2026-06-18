@@ -20,9 +20,15 @@ export function SignalDemo() {
     timers.current = [];
   };
 
+  const broadcastStage = (stage: number, active: boolean) => {
+    document.documentElement.classList.toggle("faro-alert-active", active);
+    window.dispatchEvent(new CustomEvent("faro:alert-stage", { detail: { stage, active } }));
+  };
+
   useEffect(
     () => () => {
       timers.current.forEach(window.clearTimeout);
+      document.documentElement.classList.remove("faro-alert-active");
     },
     [],
   );
@@ -32,9 +38,15 @@ export function SignalDemo() {
     setRunning(true);
     setCompleted(false);
     setActiveStep(0);
+    broadcastStage(0, true);
 
     HOME.interactive.steps.slice(1).forEach((_, index) => {
-      timers.current.push(window.setTimeout(() => setActiveStep(index + 1), (index + 1) * 850));
+      timers.current.push(
+        window.setTimeout(() => {
+          setActiveStep(index + 1);
+          broadcastStage(index + 1, true);
+        }, (index + 1) * 850),
+      );
     });
 
     timers.current.push(
@@ -43,6 +55,7 @@ export function SignalDemo() {
         setCompleted(true);
       }, HOME.interactive.steps.length * 850),
     );
+    timers.current.push(window.setTimeout(() => broadcastStage(3, false), HOME.interactive.steps.length * 850 + 1800));
   };
 
   return (

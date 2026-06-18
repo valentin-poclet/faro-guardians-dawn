@@ -8,6 +8,8 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 
 - contenu complet en francais et en anglais
 - demonstration interactive de la chaine de detection
+- sequence d'ouverture "Activer le reseau"
+- scanner forestier interactif et mode d'alerte global
 - photos du prototype et videos de modelisation 3D
 - video de presentation avec son
 - installation possible comme application web

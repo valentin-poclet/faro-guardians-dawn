@@ -1,3 +1,4 @@
+import { useState, type CSSProperties, type PointerEvent } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Github, Flame, Brain, MapPinned, AlertTriangle, ShieldCheck, Target, Cpu } from "lucide-react";
 import { PageLayout } from "@/components/faro/PageLayout";
@@ -13,10 +14,28 @@ const promiseIcons = [AlertTriangle, ShieldCheck, Target];
 
 export default function Index() {
   const { t } = useLang();
+  const [scannerActive, setScannerActive] = useState(false);
+
+  const updateScanner = (event: PointerEvent<HTMLElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--scan-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+    event.currentTarget.style.setProperty("--scan-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+  };
+
+  const scanMask = {
+    WebkitMaskImage: "radial-gradient(circle 180px at var(--scan-x, 62%) var(--scan-y, 48%), black 0%, black 48%, transparent 72%)",
+    maskImage: "radial-gradient(circle 180px at var(--scan-x, 62%) var(--scan-y, 48%), black 0%, black 48%, transparent 72%)",
+  } as CSSProperties;
+
   return (
     <PageLayout>
       {/* HERO */}
-      <section className="relative isolate min-h-[100svh] overflow-hidden">
+      <section
+        onPointerMove={updateScanner}
+        onPointerEnter={() => setScannerActive(true)}
+        onPointerLeave={() => setScannerActive(false)}
+        className="relative isolate min-h-[100svh] overflow-hidden"
+      >
         <img
           src={heroImg}
           alt=""
@@ -27,7 +46,37 @@ export default function Index() {
         <div className="absolute inset-0 -z-10 bg-gradient-hero-fade" />
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_60%_70%,hsl(15_90%_45%/0.18),transparent_60%)]" />
 
-        <div className="container relative flex min-h-[100svh] flex-col justify-end pb-16 pt-28 md:justify-center md:pb-32">
+        <div
+          className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-500 ${scannerActive ? "opacity-100" : "opacity-0"}`}
+          style={scanMask}
+          aria-hidden="true"
+        >
+          <div className="absolute inset-0 bg-primary/10 backdrop-brightness-125" />
+          <svg viewBox="0 0 1000 700" preserveAspectRatio="none" className="absolute inset-0 h-full w-full text-primary-glow">
+            <g fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="8 9" opacity="0.72">
+              <path d="M160 470 L350 330 L560 430 L780 260 L880 480" />
+              <path d="M350 330 L455 205 L780 260" />
+            </g>
+            <g fill="currentColor">
+              {[[160, 470], [350, 330], [560, 430], [780, 260], [880, 480], [455, 205]].map(([cx, cy], index) => (
+                <g key={index}>
+                  <circle cx={cx} cy={cy} r="7" />
+                  <circle cx={cx} cy={cy} r="18" fill="none" stroke="currentColor" opacity="0.35" />
+                </g>
+              ))}
+            </g>
+          </svg>
+        </div>
+
+        <div
+          className={`pointer-events-none absolute z-20 hidden h-36 w-36 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary-glow/60 font-mono text-[0.6rem] uppercase tracking-[0.28em] text-primary-glow shadow-[0_0_35px_hsl(var(--primary-glow)/0.22)] transition-opacity duration-300 md:flex ${scannerActive ? "opacity-100" : "opacity-0"}`}
+          style={{ left: "var(--scan-x, 62%)", top: "var(--scan-y, 48%)" }}
+          aria-hidden="true"
+        >
+          {t(HOME.hero.scanLabel)}
+        </div>
+
+        <div className="container relative z-10 flex min-h-[100svh] flex-col justify-end pb-16 pt-28 md:justify-center md:pb-32">
           <div className="max-w-3xl reveal">
             <p className="mb-5 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-accent">
               <span className="h-px w-8 bg-accent" />

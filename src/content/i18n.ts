@@ -44,6 +44,7 @@ export const HOME = {
       fr: "Prototype étudiant — données campus — validation terrain nécessaire",
       en: "Student prototype — campus data — field validation required",
     },
+    scanLabel: { fr: "Scan terrain", en: "Field scan" },
     ctaPrimary: { fr: "Découvrir le projet", en: "Discover the project" },
     ctaSecondary: { fr: "Voir le GitHub", en: "View on GitHub" },
   },
@@ -198,6 +199,7 @@ export const HOME = {
     start: { fr: "Lancer une détection", en: "Start a detection" },
     replay: { fr: "Relancer la séquence", en: "Replay the sequence" },
     running: { fr: "Transmission en cours...", en: "Transmission in progress..." },
+    alertLabel: { fr: "Alerte FARO", en: "FARO alert" },
     hint: {
       fr: "Vous pouvez aussi survoler chaque étape.",
       en: "You can also hover over each step.",

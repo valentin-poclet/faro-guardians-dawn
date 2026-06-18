@@ -77,6 +77,13 @@ All colors MUST be HSL.
       radial-gradient(ellipse 80% 50% at 50% -10%, hsl(150 40% 10% / 0.6), transparent),
       radial-gradient(ellipse 60% 40% at 90% 100%, hsl(28 80% 20% / 0.08), transparent);
     background-attachment: fixed;
+    transition: background-color 500ms ease, color 500ms ease;
+  }
+
+  html.faro-alert-active body {
+    background-image:
+      radial-gradient(ellipse 70% 45% at 50% 0%, hsl(var(--accent) / 0.13), transparent),
+      radial-gradient(ellipse 55% 40% at 90% 100%, hsl(var(--accent) / 0.1), transparent);
   }
 
   ::selection {
@@ -135,6 +142,47 @@ All colors MUST be HSL.
     10% { opacity: 0.8; }
     100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
   }
+
+  .intro-link {
+    position: absolute;
+    height: 1px;
+    transform-origin: left center;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary-glow) / 0.65), transparent);
+    opacity: 0.25;
+  }
+
+  .intro-node {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: translate(-50%, -50%);
+    border: 1px solid hsl(var(--primary-glow) / 0.7);
+    border-radius: 999px;
+    background: hsl(var(--background));
+    box-shadow: 0 0 0 6px hsl(var(--primary) / 0.08);
+  }
+
+  .intro-network.is-active .intro-link {
+    opacity: 1;
+    animation: network-link 1.2s ease-out both;
+  }
+
+  .intro-network.is-active .intro-node {
+    border-color: hsl(var(--accent));
+    background: hsl(var(--accent));
+    animation: network-node 0.8s ease-out both;
+  }
+
+  @keyframes network-link {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes network-node {
+    0% { transform: translate(-50%, -50%) scale(0.6); box-shadow: 0 0 0 0 hsl(var(--accent) / 0.5); }
+    60% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 0 18px hsl(var(--accent) / 0); }
+    100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 18px hsl(var(--accent) / 0.55); }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -142,6 +190,7 @@ All colors MUST be HSL.
   .reveal,
   .ember-pulse,
   .animate-ping,
+  .animate-pulse,
   [style*="float-particle"] {
     animation: none !important;
     opacity: 1;
@@ -150,5 +199,9 @@ All colors MUST be HSL.
 
   .pointer-glow {
     background-image: none !important;
+  }
+
+  .intro-network * {
+    animation: none !important;
   }
 }
