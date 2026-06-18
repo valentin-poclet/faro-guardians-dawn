@@ -2,6 +2,8 @@ import { useEffect, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import { OfflineStatus } from "./OfflineStatus";
+import { ScrollProgress } from "./ScrollProgress";
 
 export function PageLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -10,9 +12,11 @@ export function PageLayout({ children }: { children: ReactNode }) {
   }, [pathname]);
   return (
     <div className="flex min-h-screen flex-col">
+      <ScrollProgress />
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      <OfflineStatus />
     </div>
   );
 }

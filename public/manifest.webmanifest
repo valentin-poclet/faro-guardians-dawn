@@ -1,0 +1,18 @@
+{
+  "name": "FARO - Fire Area Risk Observatory",
+  "short_name": "FARO",
+  "description": "Démonstrateur de détection précoce des feux de forêt développé à ESIEE Paris.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a120e",
+  "theme_color": "#0a120e",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/faro-logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -115,6 +115,21 @@ All colors MUST be HSL.
   }
   .ember-pulse { animation: ember-pulse 3s ease-in-out infinite; }
 
+  .pointer-glow {
+    --pointer-x: 50%;
+    --pointer-y: 50%;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .pointer-glow:hover {
+      background-image: radial-gradient(
+        420px circle at var(--pointer-x) var(--pointer-y),
+        hsl(var(--accent) / 0.14),
+        transparent 46%
+      );
+    }
+  }
+
   @keyframes float-particle {
     0% { transform: translateY(0) translateX(0); opacity: 0; }
     10% { opacity: 0.8; }
@@ -126,9 +141,14 @@ All colors MUST be HSL.
   html { scroll-behavior: auto; }
   .reveal,
   .ember-pulse,
+  .animate-ping,
   [style*="float-particle"] {
     animation: none !important;
     opacity: 1;
     transform: none;
+  }
+
+  .pointer-glow {
+    background-image: none !important;
   }
 }

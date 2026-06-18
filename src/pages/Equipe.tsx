@@ -2,6 +2,7 @@ import { Mail } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { useLang } from "@/i18n/LanguageContext";
 import { TEAM } from "@/content/i18n";
+import { updatePointerGlow } from "@/lib/pointer-glow";
 
 function initials(name: string) {
   return name
@@ -22,7 +23,8 @@ export default function Equipe() {
           {TEAM.members.map((m) => (
             <article
               key={m.name}
-              className="group relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-border/70 bg-card p-7 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/60"
+              onPointerMove={updatePointerGlow}
+              className="pointer-glow group relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-border/70 bg-card p-7 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/60"
             >
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-glow opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative flex items-center gap-4">

@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Github, Flame, Brain, MapPinned, AlertTriangle, ShieldCheck, Target, Cpu } from "lucide-react";
 import { PageLayout } from "@/components/faro/PageLayout";
+import { SignalDemo } from "@/components/faro/SignalDemo";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
 import { BRAND, HOME, LINKS } from "@/content/i18n";
 import heroImg from "@/assets/hero-forest.jpg";
+import { updatePointerGlow } from "@/lib/pointer-glow";
 
 const pillarIcons = [Flame, Brain, MapPinned];
 const promiseIcons = [AlertTriangle, ShieldCheck, Target];
@@ -96,7 +98,8 @@ export default function Index() {
               return (
                 <article
                   key={i}
-                  className="group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-card transition-all duration-500 hover:border-accent/50"
+                  onPointerMove={updatePointerGlow}
+                  className="pointer-glow group relative overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/50"
                 >
                   <div className="absolute -right-12 -top-16 h-36 w-36 rounded-full bg-gradient-glow opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   <div className="relative flex gap-4">
@@ -153,7 +156,8 @@ export default function Index() {
           {HOME.how.steps.map((s) => (
             <li
               key={s.n}
-              className="group relative flex flex-col gap-4 rounded-2xl border border-border/70 bg-card p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/50"
+              onPointerMove={updatePointerGlow}
+              className="pointer-glow group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/50"
             >
               <span className="font-mono text-xs tracking-widest text-accent">{s.n}</span>
               <h3 className="font-display text-xl font-semibold">{t(s.title)}</h3>
@@ -176,7 +180,8 @@ export default function Index() {
               return (
                 <article
                   key={i}
-                  className="relative overflow-hidden rounded-2xl border border-border/70 bg-card p-8 shadow-card"
+                  onPointerMove={updatePointerGlow}
+                  className="pointer-glow relative overflow-hidden rounded-2xl border border-border/70 bg-card p-8 shadow-card transition-transform duration-500 hover:-translate-y-1"
                 >
                   <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-glow opacity-50" />
                   <Icon className="mb-6 h-7 w-7 text-accent" />
@@ -228,6 +233,8 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      <SignalDemo />
 
       {/* PROJECT VIDEO */}
       <section className="container py-24 md:py-32">

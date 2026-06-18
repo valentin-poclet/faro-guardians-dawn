@@ -3,6 +3,7 @@ import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
 import { RESOURCES } from "@/content/i18n";
+import { updatePointerGlow } from "@/lib/pointer-glow";
 
 export default function Ressources() {
   const { t } = useLang();
@@ -22,7 +23,8 @@ export default function Ressources() {
           {RESOURCES.blocks.map((b, i) => (
             <article
               key={i}
-              className="grid items-center gap-8 rounded-2xl border border-border/70 bg-card p-8 shadow-card md:grid-cols-[1fr_auto] md:p-12"
+              onPointerMove={updatePointerGlow}
+              className="pointer-glow grid items-center gap-8 overflow-hidden rounded-2xl border border-border/70 bg-card p-8 shadow-card transition-transform duration-300 hover:-translate-y-1 md:grid-cols-[1fr_auto] md:p-12"
             >
               <div className="max-w-2xl">
                 <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent">

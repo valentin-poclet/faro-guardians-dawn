@@ -188,6 +188,39 @@ export const HOME = {
       { value: "GeoJSON", label: { fr: "export cartographique", en: "map-ready export" } },
     ],
   },
+  interactive: {
+    eyebrow: { fr: "Démonstration interactive", en: "Interactive demonstration" },
+    title: { fr: "Suivez une alerte à travers FARO.", en: "Follow an alert through FARO." },
+    text: {
+      fr: "Lancez la séquence pour visualiser le parcours d'une anomalie, depuis sa mesure sur le terrain jusqu'à son affichage sur la carte prédictive.",
+      en: "Start the sequence to visualise an anomaly travelling from its field measurement to the predictive map.",
+    },
+    start: { fr: "Lancer une détection", en: "Start a detection" },
+    replay: { fr: "Relancer la séquence", en: "Replay the sequence" },
+    running: { fr: "Transmission en cours...", en: "Transmission in progress..." },
+    hint: {
+      fr: "Vous pouvez aussi survoler chaque étape.",
+      en: "You can also hover over each step.",
+    },
+    steps: [
+      {
+        title: { fr: "Mesure", en: "Measure" },
+        detail: { fr: "Le BME688 relève une variation.", en: "The BME688 detects a variation." },
+      },
+      {
+        title: { fr: "Analyse", en: "Analyse" },
+        detail: { fr: "L'IA calcule le score d'anomalie.", en: "The AI computes the anomaly score." },
+      },
+      {
+        title: { fr: "Transmission", en: "Transmit" },
+        detail: { fr: "Le réseau LoRa relaie l'alerte.", en: "The LoRa network relays the alert." },
+      },
+      {
+        title: { fr: "Simulation", en: "Simulate" },
+        detail: { fr: "La carte projette la propagation.", en: "The map projects fire spread." },
+      },
+    ],
+  },
   video: {
     eyebrow: { fr: "Présentation vidéo", en: "Video presentation" },
     title: { fr: "FARO, du concept au déploiement.", en: "FARO, from concept to deployment." },
@@ -636,6 +669,10 @@ export const UI = {
   openMenu: { fr: "Ouvrir le menu", en: "Open menu" },
   closeMenu: { fr: "Fermer le menu", en: "Close menu" },
   layer: { fr: "Couche", en: "Layer" },
+  offline: {
+    fr: "Mode hors connexion - le contenu déjà consulté reste disponible.",
+    en: "Offline mode - previously viewed content remains available.",
+  },
   mediaReplace: {
     fr: "Remplacer ce bloc par votre fichier quand il sera prêt.",
     en: "Replace this block with your file when ready.",

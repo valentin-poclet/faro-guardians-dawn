@@ -4,6 +4,16 @@ Site vitrine bilingue du projet FARO, realise par six etudiants ingenieurs de 3e
 
 Le site presente le projet a un jury, a des visiteurs de stand et a des personnes non specialistes : detection precoce des feux de foret, reseau LoRa maille, IA embarquee et simulation predictive de propagation.
 
+## Fonctionnalites principales
+
+- contenu complet en francais et en anglais
+- demonstration interactive de la chaine de detection
+- photos du prototype et videos de modelisation 3D
+- video de presentation avec son
+- installation possible comme application web
+- consultation hors connexion des pages et ressources deja chargees
+- navigation mobile et barre de progression de lecture
+
 ## Lancer le site en local
 
 ```bash

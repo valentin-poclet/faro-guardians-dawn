@@ -3,6 +3,7 @@ import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
 import { PROJECT, LINKS, UI } from "@/content/i18n";
+import { updatePointerGlow } from "@/lib/pointer-glow";
 
 const ethicsIcons = [UserCheck, ScanSearch, RadioTower];
 
@@ -30,7 +31,8 @@ export default function Projet() {
             {PROJECT.chain.items.map((item, i) => (
               <li
                 key={i}
-                className="relative rounded-xl border border-border/70 bg-card p-4 shadow-card"
+                onPointerMove={updatePointerGlow}
+                className="pointer-glow relative overflow-hidden rounded-xl border border-border/70 bg-card p-4 shadow-card transition-transform duration-300 hover:-translate-y-1"
               >
                 <span className="font-mono text-xs text-accent">
                   {String(i + 1).padStart(2, "0")}
@@ -115,7 +117,7 @@ export default function Projet() {
             {PROJECT.ethics.principles.map((principle, index) => {
               const Icon = ethicsIcons[index] ?? UserCheck;
               return (
-                <article key={index} className="rounded-xl border border-border/70 bg-card p-6 shadow-card">
+                <article key={index} onPointerMove={updatePointerGlow} className="pointer-glow overflow-hidden rounded-xl border border-border/70 bg-card p-6 shadow-card transition-transform duration-300 hover:-translate-y-1">
                   <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
                     <Icon className="h-5 w-5" />
                   </span>

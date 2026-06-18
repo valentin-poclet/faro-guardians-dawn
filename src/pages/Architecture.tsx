@@ -2,6 +2,7 @@ import { Cpu, Radio, Activity, Monitor, BatteryCharging, Network, AlertTriangle,
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { useLang } from "@/i18n/LanguageContext";
 import { ARCH } from "@/content/i18n";
+import { updatePointerGlow } from "@/lib/pointer-glow";
 
 const componentIcons = [Activity, Radio, Cpu, Monitor, BatteryCharging, Network];
 
@@ -105,7 +106,7 @@ export default function Architecture() {
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-2">
-                    <figure className="overflow-hidden rounded-xl border border-border/70 bg-card shadow-card">
+                    <figure onPointerMove={updatePointerGlow} className="pointer-glow overflow-hidden rounded-xl border border-border/70 bg-card shadow-card transition-transform duration-500 hover:-translate-y-1">
                       <figcaption className="border-b border-border/70 px-5 py-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
                         {t(ARCH.media.photoLabel)}
                       </figcaption>
@@ -127,7 +128,7 @@ export default function Architecture() {
                       )}
                     </figure>
 
-                    <figure className="overflow-hidden rounded-xl border border-border/70 bg-card shadow-card">
+                    <figure onPointerMove={updatePointerGlow} className="pointer-glow overflow-hidden rounded-xl border border-border/70 bg-card shadow-card transition-transform duration-500 hover:-translate-y-1">
                       <figcaption className="border-b border-border/70 px-5 py-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
                         {t(ARCH.media.videoLabel)}
                       </figcaption>
@@ -190,7 +191,8 @@ export default function Architecture() {
               return (
                 <article
                   key={i}
-                  className="relative flex flex-col gap-4 rounded-2xl border border-border/70 bg-card p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/50"
+                  onPointerMove={updatePointerGlow}
+                  className="pointer-glow relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/50"
                 >
                   <div className="flex items-center justify-between">
                     <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
