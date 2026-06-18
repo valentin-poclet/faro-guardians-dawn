@@ -318,10 +318,76 @@ export const ARCH = {
     fr: "Chaque nœud FARO est une unité autonome pensée pour fonctionner en extérieur, sans infrastructure réseau existante, avec une alimentation indépendante.",
     en: "Each FARO node is an autonomous unit designed to operate outdoors, without existing network infrastructure, on independent power.",
   },
-  diagram: { fr: "Insérer ici le schéma d'architecture", en: "System architecture diagram to be inserted here" },
-  showcase: {
-    fr: "Insérer ici les photos du boîtier et du prototype",
-    en: "Enclosure & prototype photos to be inserted here",
+  diagram: {
+    eyebrow: { fr: "Vue d'ensemble", en: "System overview" },
+    title: { fr: "Du terrain jusqu'à la simulation.", en: "From the field to the simulation." },
+    intro: {
+      fr: "Le schéma résume les quatre fonctions principales de FARO : mesurer, analyser localement, transmettre sans Internet et simuler la propagation.",
+      en: "The diagram summarises FARO's four main functions: measure, analyse locally, transmit without Internet and simulate fire spread.",
+    },
+    caption: {
+      fr: "Schéma fonctionnel de l'architecture FARO. Cliquez pour l'afficher en pleine taille.",
+      en: "Functional diagram of the FARO architecture. Click to open it full size.",
+    },
+  },
+  media: {
+    eyebrow: { fr: "Prototype et modélisation", en: "Prototype and modelling" },
+    title: {
+      fr: "Du composant réel à son modèle 3D.",
+      en: "From the real component to its 3D model.",
+    },
+    intro: {
+      fr: "Chaque élément a été sélectionné pour le prototype puis reproduit en 3D afin de préparer son intégration mécanique dans le boîtier.",
+      en: "Each element was selected for the prototype and then reproduced in 3D to prepare its mechanical integration into the enclosure.",
+    },
+    photoLabel: { fr: "Composant réel", en: "Real component" },
+    videoLabel: { fr: "Modélisation 3D", en: "3D model" },
+    exteriorLabel: { fr: "Extérieur", en: "Exterior" },
+    interiorLabel: { fr: "Intérieur", en: "Interior" },
+    items: [
+      {
+        title: { fr: "Capteur BME688", en: "BME688 sensor" },
+        text: {
+          fr: "Le capteur environnemental utilisé pour mesurer la température, l'humidité, la pression et les variations de qualité de l'air.",
+          en: "The environmental sensor used to measure temperature, humidity, pressure and air-quality variations.",
+        },
+      },
+      {
+        title: { fr: "Carte DFR1195", en: "DFR1195 board" },
+        text: {
+          fr: "La carte ESP32-S3 qui pilote le nœud et assure la communication radio LoRa.",
+          en: "The ESP32-S3 board that controls the node and handles LoRa radio communication.",
+        },
+      },
+      {
+        title: { fr: "Batterie LiPo 3000 mAh", en: "3000 mAh LiPo battery" },
+        text: {
+          fr: "La source d'énergie embarquée choisie pour alimenter chaque nœud du prototype.",
+          en: "The on-board energy source selected to power each prototype node.",
+        },
+      },
+      {
+        title: { fr: "Cellule solaire SOL3W", en: "SOL3W solar cell" },
+        text: {
+          fr: "La cellule photovoltaïque prévue pour contribuer à l'autonomie énergétique du nœud.",
+          en: "The photovoltaic cell intended to contribute to the node's energy autonomy.",
+        },
+      },
+      {
+        title: { fr: "Module SunFlower DFR0559", en: "SunFlower DFR0559 module" },
+        text: {
+          fr: "Le module de gestion d'alimentation placé entre la cellule solaire, la batterie et l'électronique.",
+          en: "The power management module placed between the solar cell, battery and electronics.",
+        },
+      },
+      {
+        title: { fr: "Boîtier du nœud FARO", en: "FARO node enclosure" },
+        text: {
+          fr: "Le boîtier fabriqué pour rassembler, protéger et rendre accessibles les éléments du prototype.",
+          en: "The enclosure built to house, protect and provide access to the prototype components.",
+        },
+      },
+    ],
   },
   inventory: {
     eyebrow: { fr: "Nomenclature du prototype", en: "Prototype bill of materials" },
@@ -420,6 +486,7 @@ export const TEAM = {
   members: [
     {
       name: "Valentin Poclet",
+      email: "valentin.poclet@edu.esiee.fr",
       role: { fr: "Simulation prédictive & export cartographique", en: "Predictive simulation & map export" },
       bio: {
         fr: "Valentin a développé le moteur de simulation de propagation du feu, modélisé le terrain en grille cellulaire, intégré la gestion des obstacles naturels, connecté les données météo en direct via l'API OpenWeatherMap, orienté la propagation selon la vitesse et la direction du vent, généré les projections à t+5, t+15 et t+30 minutes et créé l'export GeoJSON pour le rendu cartographique avec Leaflet.js.",
@@ -428,6 +495,7 @@ export const TEAM = {
     },
     {
       name: "Marius Velluet",
+      email: "marius.velluet@edu.esiee.fr",
       role: { fr: "Application web & infrastructure", en: "Web application & infrastructure" },
       bio: {
         fr: "Marius a construit l'application web de simulation prédictive, déployée via Docker avec un serveur Node.js et une interface React. Il a conçu l'architecture permettant la visualisation en temps réel des données capteurs, des alertes et de la carte animée de propagation.",
@@ -436,6 +504,7 @@ export const TEAM = {
     },
     {
       name: "Christophe Sannier",
+      email: "christophe.sannier@edu.esiee.fr",
       role: { fr: "Électronique embarquée & logique de contrôle", en: "Embedded electronics & control logic" },
       bio: {
         fr: "Christophe a conçu et développé la couche embarquée des nœuds : machine à états, logique de décision, intégration du capteur BME688, intégration de l'écran OLED et logique de contrôle opérationnel. Il a travaillé étroitement avec Thomas pour assurer la cohérence entre les couches matérielle et logicielle.",
@@ -444,6 +513,7 @@ export const TEAM = {
     },
     {
       name: "Jean Catherine",
+      email: "jean.catherine@edu.esiee.fr",
       role: { fr: "Intelligence artificielle", en: "Artificial intelligence" },
       bio: {
         fr: "Jean a conçu et entraîné le modèle d'IA du projet, un autoencodeur basé sur les données réelles collectées avec le capteur BME688. Il a validé le modèle en conditions réelles et calibré le seuil MSE pour réduire les faux positifs tout en conservant une détection fiable.",
@@ -452,6 +522,7 @@ export const TEAM = {
     },
     {
       name: "Léon Rostand",
+      email: "leon.rostand@edu.esiee.fr",
       role: { fr: "Réseau LoRa & communication radio", en: "LoRa network & radio communication" },
       bio: {
         fr: "Léon a développé la couche de communication radio basée sur la technologie LoRa. Il a implémenté le protocole maillé de flooding qui permet aux nœuds de relayer les données sans Internet ni infrastructure existante.",
@@ -459,7 +530,8 @@ export const TEAM = {
       },
     },
     {
-      name: "Thomas Degoulé",
+      name: "Thomas Degoul",
+      email: "thomas.degoul@edu.esiee.fr",
       role: { fr: "Intégration système & documentation", en: "System integration & documentation" },
       bio: {
         fr: "Thomas a contribué à l'intégration du système embarqué en collaboration avec Christophe, assuré la cohérence de la chaîne de détection, mené le rapport éthique et contribué à la vidéo de présentation du projet.",
@@ -518,13 +590,14 @@ export const RESOURCES = {
       href: "/documents/bom-faro.xlsx",
     },
     {
-      kind: "video",
-      title: { fr: "Vidéo du projet", en: "Project video" },
+      kind: "poster",
+      title: { fr: "Affiche FARO - Journée des projets", en: "FARO poster - Project Day" },
       desc: {
-        fr: "Découvrez FARO en action : déploiement des capteurs, détection en direct et simulation de propagation.",
-        en: "See FARO in action: sensor deployment, live detection and propagation simulation.",
+        fr: "L'affiche officielle présentée lors de la Journée des projets : problème, solution, chaîne fonctionnelle et architecture FARO.",
+        en: "The official Project Day poster presenting FARO's problem, solution, functional chain and architecture.",
       },
-      videoPlaceholder: { fr: "Insérer ici la vidéo du projet", en: "Project video to be inserted here" },
+      cta: { fr: "Ouvrir l'affiche", en: "Open the poster" },
+      href: "/documents/affiche-faro-journee-projets.pdf",
     },
   ] as const,
 };

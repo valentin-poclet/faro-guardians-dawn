@@ -1,3 +1,4 @@
+import { Mail } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { useLang } from "@/i18n/LanguageContext";
 import { TEAM } from "@/content/i18n";
@@ -37,6 +38,13 @@ export default function Equipe() {
                 </div>
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground">{t(m.bio)}</p>
+              <a
+                href={`mailto:${m.email}`}
+                className="mt-auto inline-flex items-center gap-2 border-t border-border/70 pt-4 text-sm text-muted-foreground transition-colors hover:text-accent"
+              >
+                <Mail className="h-4 w-4 shrink-0" />
+                <span className="break-all">{m.email}</span>
+              </a>
             </article>
           ))}
         </div>

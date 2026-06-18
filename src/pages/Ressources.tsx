@@ -1,7 +1,6 @@
-import { Github, ExternalLink, Film, FileText, Package } from "lucide-react";
+import { Github, ExternalLink, FileText, Package } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
-import { MediaPlaceholder } from "@/components/faro/MediaPlaceholder";
 import { useLang } from "@/i18n/LanguageContext";
 import { RESOURCES } from "@/content/i18n";
 
@@ -9,7 +8,7 @@ export default function Ressources() {
   const { t } = useLang();
   const resourceIcon = (kind: string) => {
     if (kind === "github") return <Github />;
-    if (kind === "report") return <FileText />;
+    if (kind === "report" || kind === "poster") return <FileText />;
     if (kind === "bom") return <Package />;
     return <ExternalLink />;
   };
@@ -33,32 +32,14 @@ export default function Ressources() {
                 </h2>
                 <p className="mt-3 leading-relaxed text-muted-foreground">{t(b.desc)}</p>
 
-                {b.kind === "video" && (
-                  <div className="mt-6">
-                    <MediaPlaceholder
-                      label={t(b.videoPlaceholder)}
-                      variant="video"
-                      aspect="video"
-                    />
-                  </div>
-                )}
               </div>
 
-              {b.kind !== "video" && (
-                <Button asChild variant="ember" size="lg">
-                  <a href={b.href} target="_blank" rel="noreferrer">
-                    {resourceIcon(b.kind)}
-                    {t(b.cta)}
-                  </a>
-                </Button>
-              )}
-              {b.kind === "video" && (
-                <div className="hidden md:block">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full border border-accent/40 bg-accent/10 text-accent shadow-ember">
-                    <Film className="h-6 w-6" />
-                  </span>
-                </div>
-              )}
+              <Button asChild variant="ember" size="lg">
+                <a href={b.href} target="_blank" rel="noreferrer">
+                  {resourceIcon(b.kind)}
+                  {t(b.cta)}
+                </a>
+              </Button>
             </article>
           ))}
         </div>

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Github, Flame, Brain, MapPinned, AlertTriangle, ShieldCheck, Target, Cpu } from "lucide-react";
 import { PageLayout } from "@/components/faro/PageLayout";
-import { MediaPlaceholder } from "@/components/faro/MediaPlaceholder";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
 import { BRAND, HOME, LINKS } from "@/content/i18n";
@@ -228,16 +227,6 @@ export default function Index() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* VIDEO */}
-      <section className="container py-24 md:py-32">
-        <MediaPlaceholder
-          label={t(HOME.video.placeholder)}
-          caption={t(HOME.video.caption)}
-          variant="video"
-          aspect="wide"
-        />
       </section>
 
       {/* TEAM TEASER */}

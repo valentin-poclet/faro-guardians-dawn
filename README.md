@@ -50,18 +50,20 @@ src/content/i18n.ts
 
 Chercher la constante `LINKS`.
 
-## Remplacer les images et videos
+## Images et videos
 
-Les blocs "Insérer ici..." sont des placeholders. Pour les remplacer, ajouter les fichiers dans :
+Les medias du prototype sont ranges dans :
 
 ```text
-src/assets/
+public/media/components/
+public/media/architecture/
 ```
 
-Puis importer le fichier dans la page concernee, par exemple :
+Les associations entre photos, videos 3D et textes sont definies dans :
 
-```tsx
-import projectVideo from "@/assets/video-projet.mp4";
+```text
+src/pages/Architecture.tsx
+src/content/i18n.ts
 ```
 
 Les pages principales sont dans :

@@ -1,10 +1,44 @@
-import { Cpu, Radio, Activity, Monitor, BatteryCharging, Network, AlertTriangle } from "lucide-react";
+import { Cpu, Radio, Activity, Monitor, BatteryCharging, Network, AlertTriangle, ExternalLink } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
-import { MediaPlaceholder } from "@/components/faro/MediaPlaceholder";
 import { useLang } from "@/i18n/LanguageContext";
 import { ARCH } from "@/content/i18n";
 
 const componentIcons = [Activity, Radio, Cpu, Monitor, BatteryCharging, Network];
+
+const mediaItems = [
+  {
+    image: "/media/components/bme688.png",
+    video: "/media/components/bme688-3d.mp4",
+    poster: "/media/components/bme688-3d-poster.jpg",
+  },
+  {
+    image: "/media/components/dfr1195.png",
+    video: "/media/components/dfr1195-3d.mp4",
+    poster: "/media/components/dfr1195-3d-poster.jpg",
+  },
+  {
+    image: "/media/components/lipo-3000mah.png",
+    video: "/media/components/lipo-3000mah-3d.mp4",
+    poster: "/media/components/lipo-3000mah-3d-poster.jpg",
+  },
+  {
+    image: "/media/components/sol3w.png",
+    video: "/media/components/sol3w-3d.mp4",
+    poster: "/media/components/sol3w-3d-poster.jpg",
+  },
+  {
+    image: "/media/components/sunflower-dfr0559.png",
+    video: "/media/components/sunflower-dfr0559-3d.mp4",
+    poster: "/media/components/sunflower-dfr0559-3d-poster.jpg",
+  },
+  {
+    image: "/media/components/boitier-exterieur.jpg",
+    secondaryImage: "/media/components/boitier-interieur.jpg",
+    video: "/media/components/boitier-3d.mp4",
+    poster: "/media/components/boitier-3d-poster.jpg",
+    cover: true,
+  },
+];
 
 export default function Architecture() {
   const { t } = useLang();
@@ -16,12 +50,108 @@ export default function Architecture() {
         subtitle={t(ARCH.intro)}
       />
 
-      <section className="container py-20 md:py-24">
-        <MediaPlaceholder label={t(ARCH.diagram)} variant="diagram" aspect="wide" />
+      <section className="container py-20 md:py-28">
+        <div className="max-w-3xl">
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+            {t(ARCH.diagram.eyebrow)}
+          </p>
+          <h2 className="font-display text-3xl font-bold leading-tight md:text-5xl">
+            {t(ARCH.diagram.title)}
+          </h2>
+          <p className="mt-5 leading-relaxed text-muted-foreground md:text-lg">{t(ARCH.diagram.intro)}</p>
+        </div>
+        <a
+          href="/media/architecture/schema-faro.png"
+          target="_blank"
+          rel="noreferrer"
+          className="group mt-10 block overflow-hidden rounded-xl border border-border/70 bg-white p-3 shadow-card md:p-6"
+        >
+          <img
+            src="/media/architecture/schema-faro.png"
+            alt={t(ARCH.diagram.caption)}
+            width="1402"
+            height="376"
+            className="h-auto w-full"
+          />
+          <span className="mt-4 flex items-center justify-center gap-2 text-sm text-background/70 transition-colors group-hover:text-background">
+            {t(ARCH.diagram.caption)} <ExternalLink className="h-4 w-4" />
+          </span>
+        </a>
       </section>
 
-      <section className="container pb-20">
-        <MediaPlaceholder label={t(ARCH.showcase)} variant="image" aspect="video" />
+      <section className="border-t border-border/60 bg-secondary/20">
+        <div className="container py-20 md:py-28">
+          <div className="max-w-3xl">
+            <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-accent">
+              {t(ARCH.media.eyebrow)}
+            </p>
+            <h2 className="font-display text-3xl font-bold leading-tight md:text-5xl">
+              {t(ARCH.media.title)}
+            </h2>
+            <p className="mt-5 leading-relaxed text-muted-foreground md:text-lg">{t(ARCH.media.intro)}</p>
+          </div>
+
+          <div className="mt-14 space-y-16">
+            {ARCH.media.items.map((item, index) => {
+              const media = mediaItems[index];
+              return (
+                <article key={index} className="border-t border-border/70 pt-10">
+                  <div className="mb-7 grid gap-4 md:grid-cols-[80px_1fr]">
+                    <span className="font-mono text-sm text-accent">{String(index + 1).padStart(2, "0")}</span>
+                    <div className="max-w-3xl">
+                      <h3 className="font-display text-2xl font-semibold md:text-3xl">{t(item.title)}</h3>
+                      <p className="mt-3 leading-relaxed text-muted-foreground">{t(item.text)}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-5 lg:grid-cols-2">
+                    <figure className="overflow-hidden rounded-xl border border-border/70 bg-card shadow-card">
+                      <figcaption className="border-b border-border/70 px-5 py-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                        {t(ARCH.media.photoLabel)}
+                      </figcaption>
+                      {media.secondaryImage ? (
+                        <div className="grid gap-px bg-border sm:grid-cols-2">
+                          <div className="relative aspect-[4/3] bg-card">
+                            <img src={media.image} alt={`${t(item.title)} - ${t(ARCH.media.exteriorLabel)}`} loading="lazy" className="h-full w-full object-cover" />
+                            <span className="absolute bottom-3 left-3 rounded-md bg-background/85 px-2.5 py-1 text-xs text-foreground backdrop-blur-sm">{t(ARCH.media.exteriorLabel)}</span>
+                          </div>
+                          <div className="relative aspect-[4/3] bg-card">
+                            <img src={media.secondaryImage} alt={`${t(item.title)} - ${t(ARCH.media.interiorLabel)}`} loading="lazy" className="h-full w-full object-cover" />
+                            <span className="absolute bottom-3 left-3 rounded-md bg-background/85 px-2.5 py-1 text-xs text-foreground backdrop-blur-sm">{t(ARCH.media.interiorLabel)}</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="aspect-[4/3] bg-white p-6 md:p-10">
+                          <img src={media.image} alt={`${t(item.title)} - ${t(ARCH.media.photoLabel)}`} loading="lazy" className="h-full w-full object-contain" />
+                        </div>
+                      )}
+                    </figure>
+
+                    <figure className="overflow-hidden rounded-xl border border-border/70 bg-card shadow-card">
+                      <figcaption className="border-b border-border/70 px-5 py-3 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                        {t(ARCH.media.videoLabel)}
+                      </figcaption>
+                      <div className="aspect-[4/3] bg-white">
+                        <video
+                          controls
+                          muted
+                          loop
+                          playsInline
+                          preload="metadata"
+                          poster={media.poster}
+                          aria-label={`${t(item.title)} - ${t(ARCH.media.videoLabel)}`}
+                          className="h-full w-full object-contain"
+                        >
+                          <source src={media.video} type="video/mp4" />
+                        </video>
+                      </div>
+                    </figure>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
       <section className="border-t border-border/60 bg-secondary/20">
@@ -85,9 +215,6 @@ export default function Architecture() {
         </div>
       </section>
 
-      <section className="container py-20 md:py-28">
-        <MediaPlaceholder label={t(ARCH.deployVideo)} variant="video" aspect="video" />
-      </section>
     </PageLayout>
   );
 }
