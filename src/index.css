@@ -193,6 +193,10 @@ All colors MUST be HSL.
   .intro-is-opening .intro-screen-fill {
     visibility: visible;
   }
+  .intro-is-opening {
+    animation: intro-shell-release 1100ms var(--ease-out-soft) forwards;
+    will-change: opacity, transform, filter;
+  }
   .intro-wave {
     position: absolute;
     left: 50%;
@@ -236,6 +240,35 @@ All colors MUST be HSL.
     0% { opacity: 0; transform: scale(0.86); }
     45%, 72% { opacity: 1; transform: scale(1); }
     100% { opacity: 0; transform: scale(1.08); }
+  }
+  @keyframes intro-shell-release {
+    0%, 68% { opacity: 1; transform: scale(1); filter: blur(0); }
+    100% { opacity: 0; transform: scale(1.018); filter: blur(8px); }
+  }
+
+  .mission-grid {
+    background-image:
+      radial-gradient(circle at 18% 24%, hsl(var(--primary-glow) / 0.08), transparent 22%),
+      radial-gradient(circle at 76% 68%, hsl(var(--primary) / 0.2), transparent 28%);
+  }
+  .mission-cell::after {
+    content: "";
+    position: absolute;
+    inset: 16%;
+    border-radius: 999px 999px 45% 45%;
+    background: hsl(var(--primary) / 0.28);
+    clip-path: polygon(50% 0, 68% 35%, 100% 35%, 74% 57%, 84% 100%, 50% 72%, 16% 100%, 26% 57%, 0 35%, 32% 35%);
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .fire-cell {
+    animation: fire-cell-pulse 850ms ease-in-out infinite alternate;
+    box-shadow: inset 0 0 22px hsl(var(--accent) / 0.3), 0 0 16px hsl(var(--accent) / 0.22);
+  }
+  @keyframes fire-cell-pulse {
+    from { filter: brightness(0.9); }
+    to { filter: brightness(1.25); }
   }
 
   .command-trigger::before {
@@ -351,6 +384,8 @@ All colors MUST be HSL.
   .intro-wave,
   .intro-scanline,
   .intro-final-mark,
+  .intro-is-opening,
+  .fire-cell,
   .command-trigger::before {
     animation: none !important;
   }

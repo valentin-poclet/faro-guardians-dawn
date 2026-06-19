@@ -5,6 +5,7 @@ import {
   Command,
   Compass,
   Home,
+  Gamepad2,
   Layers3,
   RadioTower,
   RotateCcw,
@@ -22,6 +23,9 @@ const copy = {
     en: "Quick access to every part of the project.",
   },
   shortcuts: { fr: "Navigation rapide", en: "Quick navigation" },
+  experience: { fr: "Expérience interactive", en: "Interactive experience" },
+  game: { fr: "Mission FARO", en: "FARO Mission" },
+  gameText: { fr: "Placez les capteurs et détectez le feu à temps.", en: "Place the sensors and detect the fire in time." },
   restart: { fr: "Revoir l'introduction", en: "Replay introduction" },
   close: { fr: "Fermer", en: "Close" },
 };
@@ -90,7 +94,7 @@ export function CommandCenter() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="command-trigger fixed bottom-5 right-5 z-40 flex h-12 items-center gap-2 rounded-full border border-accent/40 bg-background/85 px-4 text-sm font-medium text-foreground shadow-ember backdrop-blur-xl transition hover:-translate-y-1 hover:border-accent md:bottom-7 md:right-7"
+        className="command-trigger fixed bottom-5 right-5 z-40 flex h-12 items-center gap-2 rounded-full border border-accent/40 bg-background/80 px-4 text-sm font-medium text-foreground shadow-ember backdrop-blur-xl transition hover:-translate-y-1 hover:border-accent md:bottom-7 md:right-7"
         aria-label={t(copy.open)}
       >
         <Command className="h-4 w-4 text-accent" />
@@ -100,7 +104,7 @@ export function CommandCenter() {
 
       <div
         className={cn(
-          "fixed inset-0 z-[80] flex items-end justify-center bg-black/65 p-3 backdrop-blur-sm transition md:items-center md:p-6",
+          "fixed inset-0 z-[80] flex items-end justify-center bg-black/60 p-3 backdrop-blur-sm transition md:items-center md:p-6",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
         onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}
@@ -127,18 +131,28 @@ export function CommandCenter() {
             {links.map((link) => {
               const Icon = link.icon;
               return (
-                <button key={link.path} type="button" onClick={() => go(link.path)} className="group flex items-center gap-3 rounded-xl border border-border/70 bg-background/35 px-4 py-3 text-left transition hover:border-accent/50 hover:bg-accent/5">
+                <button key={link.path} type="button" onClick={() => go(link.path)} className="group flex items-center gap-3 rounded-xl border border-border/70 bg-background/40 px-4 py-3 text-left transition hover:border-accent/50 hover:bg-accent/5">
                   <Icon className="h-4 w-4 text-accent" />
                   <span className="font-medium">{t(link.label)}</span>
                   <ArrowRight className="ml-auto h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
                 </button>
               );
             })}
-            <button type="button" onClick={replayIntro} className="group flex items-center gap-3 rounded-xl border border-border/70 bg-background/35 px-4 py-3 text-left transition hover:border-accent/50 hover:bg-accent/5">
+            <button type="button" onClick={replayIntro} className="group flex items-center gap-3 rounded-xl border border-border/70 bg-background/40 px-4 py-3 text-left transition hover:border-accent/50 hover:bg-accent/5">
               <RotateCcw className="h-4 w-4 text-accent" />
               <span className="font-medium">{t(copy.restart)}</span>
             </button>
           </div>
+
+          <p className="mb-3 mt-7 font-mono text-[0.68rem] uppercase tracking-[0.25em] text-muted-foreground">{t(copy.experience)}</p>
+          <button type="button" onClick={() => go("/mission-faro")} className="group flex w-full items-center gap-4 overflow-hidden rounded-xl border border-accent/40 bg-accent/5 p-4 text-left transition hover:border-accent/70 hover:bg-accent/10">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground shadow-ember"><Gamepad2 className="h-5 w-5" /></span>
+            <span>
+              <strong className="block font-display text-lg">{t(copy.game)}</strong>
+              <span className="mt-1 block text-sm text-muted-foreground">{t(copy.gameText)}</span>
+            </span>
+            <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-accent transition-transform group-hover:translate-x-1" />
+          </button>
         </section>
       </div>
 

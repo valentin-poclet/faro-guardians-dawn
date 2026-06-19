@@ -22,6 +22,9 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 - zoom plein écran des photos et du schéma d'architecture
 - progression technique active sur la page Projet
 - parallaxe discret sur la forêt et balayage visuel entre les pages
+- mini-jeu bilingue « Mission FARO », accessible uniquement depuis le centre de contrôle
+- meilleur score du jeu conservé localement sur l'appareil
+- sortie d'introduction superposée à l'accueil pour une transition plus fluide
 
 ## Lancer le site en local
 
