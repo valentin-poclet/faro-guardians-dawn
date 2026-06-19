@@ -8,6 +8,7 @@ import { useLang } from "@/i18n/LanguageContext";
 import { BRAND, HOME, LINKS } from "@/content/i18n";
 import heroImg from "@/assets/hero-forest.jpg";
 import { updatePointerGlow } from "@/lib/pointer-glow";
+import { AnimatedMetric } from "@/components/faro/AnimatedMetric";
 
 const pillarIcons = [Flame, Brain, MapPinned];
 const promiseIcons = [AlertTriangle, ShieldCheck, Target];
@@ -179,7 +180,7 @@ export default function Index() {
             >
               <div className="flex items-baseline gap-3">
                 <span className="font-display text-5xl font-bold text-gradient-ember md:text-6xl">
-                  {m.value}
+                  <AnimatedMetric value={m.value} />
                 </span>
                 <span className="font-mono text-sm uppercase tracking-widest text-muted-foreground">
                   {t(m.unit)}

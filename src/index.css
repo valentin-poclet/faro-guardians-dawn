@@ -113,6 +113,27 @@ All colors MUST be HSL.
     transform: translateY(24px);
     animation: reveal 0.9s var(--ease-out-soft) forwards;
   }
+  .page-enter {
+    animation: page-enter 0.55s var(--ease-out-soft) both;
+  }
+  @keyframes page-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .command-trigger::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: conic-gradient(from 90deg, transparent, hsl(var(--accent) / 0.55), transparent 35%);
+    opacity: 0;
+    transition: opacity 300ms ease;
+    animation: command-orbit 5s linear infinite;
+  }
+  .command-trigger:hover::before { opacity: 1; }
+  @keyframes command-orbit { to { transform: rotate(1turn); } }
   @keyframes reveal {
     to { opacity: 1; transform: translateY(0); }
   }
@@ -202,6 +223,11 @@ All colors MUST be HSL.
   }
 
   .intro-network * {
+    animation: none !important;
+  }
+
+  .page-enter,
+  .command-trigger::before {
     animation: none !important;
   }
 }

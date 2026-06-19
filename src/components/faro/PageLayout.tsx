@@ -6,6 +6,7 @@ import { OfflineStatus } from "./OfflineStatus";
 import { ScrollProgress } from "./ScrollProgress";
 import { IntroSequence } from "./IntroSequence";
 import { AlertStatus } from "./AlertStatus";
+import { CommandCenter } from "./CommandCenter";
 
 export function PageLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -18,9 +19,10 @@ export function PageLayout({ children }: { children: ReactNode }) {
       <AlertStatus />
       <ScrollProgress />
       <Navbar />
-      <main className="flex-1">{children}</main>
+      <main key={pathname} className="page-enter flex-1">{children}</main>
       <Footer />
       <OfflineStatus />
+      <CommandCenter />
     </div>
   );
 }

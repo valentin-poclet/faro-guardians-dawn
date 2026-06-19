@@ -59,7 +59,7 @@ export function SignalDemo() {
   };
 
   return (
-    <section className="border-t border-border/60 bg-secondary/20">
+    <section id="demonstration" className="scroll-mt-20 border-t border-border/60 bg-secondary/20">
       <div className="container py-24 md:py-32">
         <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <div className="max-w-3xl">
