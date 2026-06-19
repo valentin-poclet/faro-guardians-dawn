@@ -38,11 +38,12 @@ export default function Index() {
         className="relative isolate min-h-[100svh] overflow-hidden"
       >
         <img
+          data-parallax
           src={heroImg}
           alt=""
           width={1920}
           height={1080}
-          className="absolute inset-0 -z-20 h-full w-full object-cover"
+          className="parallax-media absolute -inset-y-8 inset-x-0 -z-20 h-[calc(100%+4rem)] w-full object-cover"
         />
         <div className="absolute inset-0 -z-10 bg-gradient-hero-fade" />
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_60%_70%,hsl(15_90%_45%/0.18),transparent_60%)]" />

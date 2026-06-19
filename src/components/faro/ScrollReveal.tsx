@@ -1,4 +1,4 @@
-import { useLayoutEffect, type RefObject } from "react";
+import { useEffect, useLayoutEffect, type RefObject } from "react";
 
 export function useScrollReveal(rootRef: RefObject<HTMLElement>, routeKey: string) {
   useLayoutEffect(() => {
@@ -47,6 +47,35 @@ export function useScrollReveal(rootRef: RefObject<HTMLElement>, routeKey: strin
     return () => {
       observer.disconnect();
       cleanupTimers.forEach(window.clearTimeout);
+    };
+  }, [rootRef, routeKey]);
+}
+
+export function useParallax(rootRef: RefObject<HTMLElement>, routeKey: string) {
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const elements = Array.from(root.querySelectorAll<HTMLElement>("[data-parallax]"));
+    if (!elements.length) return;
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      elements.forEach((element) => {
+        const rect = element.parentElement?.getBoundingClientRect();
+        if (!rect) return;
+        const progress = (window.innerHeight / 2 - (rect.top + rect.height / 2)) / window.innerHeight;
+        element.style.setProperty("--parallax-y", `${Math.max(-28, Math.min(28, progress * 32))}px`);
+      });
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
     };
   }, [rootRef, routeKey]);
 }

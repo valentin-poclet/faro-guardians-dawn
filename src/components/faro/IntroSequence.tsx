@@ -29,7 +29,7 @@ export function IntroSequence() {
       return true;
     }
   });
-  const [phase, setPhase] = useState<"idle" | "activating" | "ready">("idle");
+  const [phase, setPhase] = useState<"idle" | "activating" | "ready" | "opening">("idle");
   const timers = useRef<number[]>([]);
 
   const finish = () => {
@@ -64,13 +64,14 @@ export function IntroSequence() {
     if (phase !== "idle") return;
     setPhase("activating");
     timers.current.push(window.setTimeout(() => setPhase("ready"), 1500));
-    timers.current.push(window.setTimeout(finish, 2450));
+    timers.current.push(window.setTimeout(() => setPhase("opening"), 2050));
+    timers.current.push(window.setTimeout(finish, 3150));
   };
 
   if (!visible) return null;
 
   return (
-    <div role="dialog" aria-modal="true" aria-labelledby="faro-intro-title" className={cn("fixed inset-0 z-[100] overflow-hidden bg-background transition-opacity duration-700", phase === "ready" && "opacity-0")}>
+    <div role="dialog" aria-modal="true" aria-labelledby="faro-intro-title" className={cn("fixed inset-0 z-[100] overflow-hidden bg-background", phase === "opening" && "intro-is-opening")}>
       <div className="absolute inset-0 bg-grid opacity-20" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.22),transparent_62%)]" />
 
@@ -85,6 +86,17 @@ export function IntroSequence() {
         ].map(([left, top], index) => (
           <span key={index} className="intro-node" style={{ left, top, animationDelay: `${index * 140}ms` }} />
         ))}
+      </div>
+
+      <div className="intro-screen-fill pointer-events-none absolute inset-0 z-30" aria-hidden="true">
+        <span className="intro-wave" />
+        <span className="intro-scanline" />
+        <div className="intro-final-mark">
+          <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-white p-2 shadow-ember md:h-28 md:w-28">
+            <img src="/faro-logo.png" alt="" className="h-full w-full object-contain" />
+          </div>
+          <p className="mt-5 font-mono text-xs uppercase tracking-[0.3em] text-white">{t(copy.ready)}</p>
+        </div>
       </div>
 
       <button

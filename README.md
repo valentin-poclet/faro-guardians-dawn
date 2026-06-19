@@ -18,6 +18,10 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 - centre de contrôle accessible avec `Ctrl/Cmd + K`
 - chiffres clés animés et transitions de page respectant l'accessibilité
 - révélation progressive des sections et des cartes pendant le défilement
+- transition cinématique plein écran après l'activation du réseau
+- zoom plein écran des photos et du schéma d'architecture
+- progression technique active sur la page Projet
+- parallaxe discret sur la forêt et balayage visuel entre les pages
 
 ## Lancer le site en local
 

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Github, ExternalLink, UserCheck, ScanSearch, RadioTower, AlertCircle } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,28 @@ const ethicsIcons = [UserCheck, ScanSearch, RadioTower];
 
 export default function Projet() {
   const { t } = useLang();
+  const [activeLayer, setActiveLayer] = useState(0);
+  const layerRefs = useRef<(HTMLLIElement | null)[]>([]);
+
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top))[0];
+        if (visible) setActiveLayer(Number((visible.target as HTMLElement).dataset.layerIndex ?? 0));
+      },
+      { threshold: [0.25, 0.55], rootMargin: "-18% 0px -46% 0px" },
+    );
+    layerRefs.current.forEach((element) => element && observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  const focusLayer = (index: number) => {
+    layerRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
   return (
     <PageLayout>
       <PageHero
@@ -48,11 +71,32 @@ export default function Projet() {
       </section>
 
       <section className="container py-20 md:py-28">
+        <nav aria-label={t(PROJECT.chain.title)} className="sticky top-16 z-30 mb-12 overflow-hidden rounded-xl border border-border/70 bg-background/90 p-2 shadow-deep backdrop-blur-xl md:top-20 md:mb-16">
+          <div className="absolute inset-x-3 bottom-0 h-px bg-border">
+            <span className="block h-full bg-accent transition-[width] duration-700" style={{ width: `${((activeLayer + 1) / PROJECT.layers.length) * 100}%` }} />
+          </div>
+          <div className="grid grid-cols-5 gap-1">
+            {PROJECT.chain.items.map((item, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => focusLayer(index)}
+                aria-current={index === activeLayer ? "step" : undefined}
+                className={`rounded-lg px-2 py-2.5 text-center transition-colors ${index === activeLayer ? "bg-accent/10 text-foreground" : "text-muted-foreground hover:bg-secondary hover:text-foreground"}`}
+              >
+                <span className="block font-mono text-[0.6rem] text-accent">0{index + 1}</span>
+                <span className="mt-1 hidden text-xs font-medium sm:block md:text-sm">{t(item)}</span>
+              </button>
+            ))}
+          </div>
+        </nav>
         <ol className="space-y-12 md:space-y-20">
           {PROJECT.layers.map((layer, idx) => (
             <li
               key={layer.n}
-              className="grid gap-8 border-t border-border/60 pt-10 md:grid-cols-[180px_1fr] md:gap-12 md:pt-14"
+              ref={(element) => { layerRefs.current[idx] = element; }}
+              data-layer-index={idx}
+              className={`grid gap-8 border-t pt-10 transition-colors duration-700 md:grid-cols-[180px_1fr] md:gap-12 md:pt-14 ${idx === activeLayer ? "border-accent/50" : "border-border/60"}`}
             >
               <div className="flex flex-col gap-2 md:sticky md:top-28 md:self-start">
                 <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent">

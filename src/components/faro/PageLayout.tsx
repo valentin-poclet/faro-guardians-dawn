@@ -7,24 +7,29 @@ import { ScrollProgress } from "./ScrollProgress";
 import { IntroSequence } from "./IntroSequence";
 import { AlertStatus } from "./AlertStatus";
 import { CommandCenter } from "./CommandCenter";
-import { useScrollReveal } from "./ScrollReveal";
+import { useParallax, useScrollReveal } from "./ScrollReveal";
+import { MediaLightbox } from "./MediaLightbox";
+import { RouteSignal } from "./RouteSignal";
 
 export function PageLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const mainRef = useRef<HTMLElement>(null);
   useScrollReveal(mainRef, pathname);
+  useParallax(mainRef, pathname);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [pathname]);
   return (
     <div className="flex min-h-screen flex-col">
       <IntroSequence />
+      <RouteSignal routeKey={pathname} />
       <AlertStatus />
       <ScrollProgress />
       <Navbar />
       <main ref={mainRef} key={pathname} className="page-enter flex-1">{children}</main>
       <Footer />
       <OfflineStatus />
+      <MediaLightbox />
       <CommandCenter />
     </div>
   );
