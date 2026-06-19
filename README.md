@@ -36,6 +36,9 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 - option de réduction manuelle des animations dans le centre de contrôle
 - télémétrie traduite en niveaux lisibles avec explications et valeurs techniques secondaires
 - placement entièrement libre des capteurs dans Mission FARO
+- page Architecture sécurisée et allégée pour les téléphones
+- vidéos 3D chargées uniquement après une action du visiteur
+- schéma épuré sans pastilles numérotées ni panneau explicatif noir
 
 ## Lancer le site en local
 

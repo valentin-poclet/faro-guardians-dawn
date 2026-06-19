@@ -44,9 +44,18 @@ export function useScrollReveal(rootRef: RefObject<HTMLElement>, routeKey: strin
     );
 
     targets.forEach((element) => observer.observe(element));
+    const architectureMobileFallback = routeKey === "/architecture" && window.innerWidth < 768
+      ? window.setTimeout(() => {
+          targets.forEach((element) => {
+            element.classList.add("is-visible");
+            observer.unobserve(element);
+          });
+        }, 700)
+      : 0;
     return () => {
       observer.disconnect();
       cleanupTimers.forEach(window.clearTimeout);
+      if (architectureMobileFallback) window.clearTimeout(architectureMobileFallback);
     };
   }, [rootRef, routeKey]);
 }

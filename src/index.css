@@ -384,6 +384,21 @@ All colors MUST be HSL.
   .intro-final-mark {
     padding-inline: 1rem;
   }
+
+  .architecture-diagram-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--accent)) hsl(var(--background) / 0.12);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .architecture-diagram-scroll::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .architecture-diagram-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: hsl(var(--accent));
+  }
 }
 
 @supports (padding: max(0px)) {
