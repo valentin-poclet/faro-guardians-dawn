@@ -1,10 +1,18 @@
-import { Cpu, Radio, Activity, Monitor, BatteryCharging, Network, AlertTriangle, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { Cpu, Radio, Activity, Monitor, BatteryCharging, Network, AlertTriangle, Maximize2 } from "lucide-react";
 import { PageLayout, PageHero } from "@/components/faro/PageLayout";
 import { useLang } from "@/i18n/LanguageContext";
 import { ARCH } from "@/content/i18n";
 import { updatePointerGlow } from "@/lib/pointer-glow";
 
 const componentIcons = [Activity, Radio, Cpu, Monitor, BatteryCharging, Network];
+
+const diagramHotspots = [
+  { x: "12%", title: { fr: "Mesurer", en: "Measure" }, text: { fr: "Le BME688 observe température, humidité, pression et gaz.", en: "The BME688 monitors temperature, humidity, pressure and gas." } },
+  { x: "37%", title: { fr: "Analyser", en: "Analyse" }, text: { fr: "L'IA embarquée cherche une anomalie directement sur le nœud.", en: "On-device AI looks for an anomaly directly on the node." } },
+  { x: "62%", title: { fr: "Transmettre", en: "Transmit" }, text: { fr: "Le maillage LoRa relaie l'alerte sans dépendre d'Internet.", en: "The LoRa mesh relays the alert without relying on the Internet." } },
+  { x: "87%", title: { fr: "Simuler", en: "Simulate" }, text: { fr: "La carte projette plusieurs scénarios de propagation.", en: "The map projects several propagation scenarios." } },
+];
 
 const mediaItems = [
   {
@@ -43,6 +51,7 @@ const mediaItems = [
 
 export default function Architecture() {
   const { t } = useLang();
+  const [activeHotspot, setActiveHotspot] = useState(0);
   return (
     <PageLayout>
       <PageHero
@@ -61,23 +70,38 @@ export default function Architecture() {
           </h2>
           <p className="mt-5 leading-relaxed text-muted-foreground md:text-lg">{t(ARCH.diagram.intro)}</p>
         </div>
-        <a
-          href="/media/architecture/schema-faro.png"
-          target="_blank"
-          rel="noreferrer"
-          className="group mt-10 block overflow-hidden rounded-xl border border-border/70 bg-white p-3 shadow-card md:p-6"
-        >
-          <img
-            src="/media/architecture/schema-faro.png"
-            alt={t(ARCH.diagram.caption)}
-            width="1402"
-            height="376"
-            className="h-auto w-full"
-          />
-          <span className="mt-4 flex items-center justify-center gap-2 text-sm text-background/70 transition-colors group-hover:text-background">
-            {t(ARCH.diagram.caption)} <ExternalLink className="h-4 w-4" />
-          </span>
-        </a>
+        <div className="mt-10 overflow-hidden rounded-xl border border-border/70 bg-white p-2 shadow-card sm:p-3 md:p-6">
+          <div className="relative">
+            <img
+              data-lightbox
+              src="/media/architecture/schema-faro.png"
+              alt={t(ARCH.diagram.caption)}
+              width="1402"
+              height="376"
+              className="h-auto w-full rounded-md"
+            />
+            {diagramHotspots.map((hotspot, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => setActiveHotspot(index)}
+                aria-label={t(hotspot.title)}
+                className={`absolute top-[18%] flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-full border-2 text-xs font-bold shadow-ember transition sm:h-9 sm:w-9 ${activeHotspot === index ? "scale-110 border-accent bg-accent text-accent-foreground" : "border-white bg-background/80 text-white"}`}
+                style={{ left: hotspot.x }}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+          <div className="mt-3 rounded-lg bg-background p-4 text-foreground sm:mt-4 sm:flex sm:items-start sm:justify-between sm:gap-5">
+            <div>
+              <p className="font-mono text-[0.62rem] uppercase tracking-wider text-accent">0{activeHotspot + 1} / 04</p>
+              <h3 className="mt-1 font-display text-lg font-semibold">{t(diagramHotspots[activeHotspot].title)}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{t(diagramHotspots[activeHotspot].text)}</p>
+            </div>
+            <span className="mt-3 inline-flex shrink-0 items-center gap-2 text-xs text-muted-foreground sm:mt-0"><Maximize2 className="h-4 w-4" />{t(ARCH.diagram.caption)}</span>
+          </div>
+        </div>
       </section>
 
       <section className="border-t border-border/60 bg-secondary/20">
@@ -114,11 +138,11 @@ export default function Architecture() {
                         <div className="grid gap-px bg-border sm:grid-cols-2">
                           <div className="relative aspect-[4/3] bg-card">
                             <img src={media.image} alt={`${t(item.title)} - ${t(ARCH.media.exteriorLabel)}`} loading="lazy" className="h-full w-full object-cover" />
-                            <span className="absolute bottom-3 left-3 rounded-md bg-background/85 px-2.5 py-1 text-xs text-foreground backdrop-blur-sm">{t(ARCH.media.exteriorLabel)}</span>
+                            <span className="absolute bottom-3 left-3 rounded-md bg-background/80 px-2.5 py-1 text-xs text-foreground backdrop-blur-sm">{t(ARCH.media.exteriorLabel)}</span>
                           </div>
                           <div className="relative aspect-[4/3] bg-card">
                             <img src={media.secondaryImage} alt={`${t(item.title)} - ${t(ARCH.media.interiorLabel)}`} loading="lazy" className="h-full w-full object-cover" />
-                            <span className="absolute bottom-3 left-3 rounded-md bg-background/85 px-2.5 py-1 text-xs text-foreground backdrop-blur-sm">{t(ARCH.media.interiorLabel)}</span>
+                            <span className="absolute bottom-3 left-3 rounded-md bg-background/80 px-2.5 py-1 text-xs text-foreground backdrop-blur-sm">{t(ARCH.media.interiorLabel)}</span>
                           </div>
                         </div>
                       ) : (

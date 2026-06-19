@@ -18,8 +18,9 @@ import { Button } from "@/components/ui/button";
 import { useLang } from "@/i18n/LanguageContext";
 import { cn } from "@/lib/utils";
 
-const GRID_SIZE = 8;
-const SCORE_KEY = "faro.mission.v12.scores";
+const GRID_SIZE = 9;
+const SCORE_KEY = "faro.mission.v13.scores";
+const LORA_RANGE = 4;
 
 type GameStatus = "setup" | "running" | "detected" | "lost";
 type Difficulty = "easy" | "normal" | "hard";
@@ -27,9 +28,9 @@ type Terrain = "forest" | "brush" | "rock" | "water";
 type Direction = "N" | "E" | "S" | "W";
 
 const DIFFICULTIES = {
-  easy: { sensors: 5, turns: 10, multiplier: 1 },
-  normal: { sensors: 4, turns: 8, multiplier: 1.35 },
-  hard: { sensors: 3, turns: 7, multiplier: 1.8 },
+  easy: { sensors: 6, turns: 9, multiplier: 1 },
+  normal: { sensors: 5, turns: 8, multiplier: 1.45 },
+  hard: { sensors: 4, turns: 7, multiplier: 2 },
 } as const;
 
 const directionArrows: Record<Direction, string> = { N: "↑", E: "→", S: "↓", W: "←" };
@@ -47,13 +48,15 @@ const copy = {
   },
   mission: { fr: "Centre de mission", en: "Mission centre" },
   instructions: {
-    fr: "Chaque capteur surveille sa case et les huit cases voisines. Le vent accélère le feu, l'eau le bloque et la roche le ralentit.",
-    en: "Each sensor monitors its cell and the eight surrounding cells. Wind accelerates fire, water blocks it and rock slows it down.",
+    fr: "Chaque capteur surveille sa case et quatre voisines. Tous les nœuds doivent former une chaîne LoRa jusqu'à la passerelle située à l'est.",
+    en: "Each sensor monitors its cell and four neighbours. Every node must form a LoRa chain to the gateway located east of the map.",
   },
   sensors: { fr: "Capteurs", en: "Sensors" },
   turn: { fr: "Propagation", en: "Spread" },
   best: { fr: "Record local", en: "Local best" },
   coverage: { fr: "Couverture", en: "Coverage" },
+  network: { fr: "Réseau LoRa", en: "LoRa network" },
+  connected: { fr: "connectés", en: "connected" },
   wind: { fr: "Vent", en: "Wind" },
   difficulty: { fr: "Difficulté", en: "Difficulty" },
   easy: { fr: "Exploration", en: "Explore" },
@@ -64,7 +67,8 @@ const copy = {
   pause: { fr: "Pause", en: "Pause" },
   resume: { fr: "Reprendre", en: "Resume" },
   speed: { fr: "Vitesse", en: "Speed" },
-  setupHint: { fr: "Placez tous les capteurs pour commencer.", en: "Place every sensor to begin." },
+  setupHint: { fr: "Placez tous les capteurs et reliez-les à la passerelle.", en: "Place every sensor and connect them to the gateway." },
+  networkHint: { fr: "Certains capteurs sont hors de portée du réseau LoRa.", en: "Some sensors are outside the LoRa network range." },
   ready: { fr: "Placement terminé. La simulation est prête.", en: "Placement complete. The simulation is ready." },
   running: { fr: "Le feu se propage…", en: "The fire is spreading…" },
   detected: { fr: "Alerte transmise !", en: "Alert transmitted!" },
@@ -78,6 +82,7 @@ const copy = {
     en: "The fire exceeded the response window. Review uncovered areas and wind direction.",
   },
   score: { fr: "Score", en: "Score" },
+  stars: { fr: "Évaluation", en: "Rating" },
   burned: { fr: "Cases touchées", en: "Cells affected" },
   localTop: { fr: "Meilleurs scores sur cet appareil", en: "Best scores on this device" },
   sensorLabel: { fr: "Capteur FARO", en: "FARO sensor" },
@@ -130,8 +135,35 @@ function isCovered(cell: number, sensors: number[]) {
   const point = coordinates(cell);
   return sensors.some((sensor) => {
     const node = coordinates(sensor);
-    return Math.abs(point.row - node.row) <= 1 && Math.abs(point.col - node.col) <= 1;
+    return Math.abs(point.row - node.row) + Math.abs(point.col - node.col) <= 1;
   });
+}
+
+function connectedNetwork(sensors: number[]) {
+  const gateway = { row: GRID_SIZE - 1, col: GRID_SIZE };
+  const connected = new Set<number>();
+  sensors.forEach((sensor) => {
+    const node = coordinates(sensor);
+    if (Math.abs(node.row - gateway.row) + Math.abs(node.col - gateway.col) <= LORA_RANGE) connected.add(sensor);
+  });
+
+  let changed = true;
+  while (changed) {
+    changed = false;
+    sensors.forEach((sensor) => {
+      if (connected.has(sensor)) return;
+      const node = coordinates(sensor);
+      const linked = Array.from(connected).some((other) => {
+        const relay = coordinates(other);
+        return Math.abs(node.row - relay.row) + Math.abs(node.col - relay.col) <= LORA_RANGE;
+      });
+      if (linked) {
+        connected.add(sensor);
+        changed = true;
+      }
+    });
+  }
+  return Array.from(connected);
 }
 
 function coverage(sensors: number[]) {
@@ -157,6 +189,7 @@ export default function MissionFaro() {
   const [paused, setPaused] = useState(false);
   const [speed, setSpeed] = useState<1 | 2>(1);
   const [score, setScore] = useState(0);
+  const [stars, setStars] = useState(0);
   const [scores, setScores] = useState<number[]>(() => {
     if (typeof window === "undefined") return [];
     try {
@@ -170,7 +203,15 @@ export default function MissionFaro() {
   const config = DIFFICULTIES[difficulty];
   const terrain = useMemo(() => createTerrain(seed), [seed]);
   const wind = useMemo<Direction>(() => (["N", "E", "S", "W"] as Direction[])[seed % 4], [seed]);
+  const activeWind = useMemo<Direction>(() => {
+    const directions = ["N", "E", "S", "W"] as Direction[];
+    const initial = directions.indexOf(wind);
+    const shift = difficulty === "easy" ? 0 : Math.floor(turn / 3);
+    return directions[(initial + shift) % directions.length];
+  }, [difficulty, turn, wind]);
   const coveredCells = useMemo(() => coverage(sensors), [sensors]);
+  const connectedSensors = useMemo(() => connectedNetwork(sensors), [sensors]);
+  const networkReady = sensors.length === config.sensors && connectedSensors.length === sensors.length;
   const bestScore = scores[0] ?? 0;
 
   useEffect(() => {
@@ -181,8 +222,8 @@ export default function MissionFaro() {
         const options = neighbourDetails(cell)
           .filter((candidate) => terrain[candidate.cell] !== "water" && !burning.has(candidate.cell))
           .sort((a, b) => {
-            const windA = a.direction === wind ? -3 : 0;
-            const windB = b.direction === wind ? -3 : 0;
+            const windA = a.direction === activeWind ? -3 : 0;
+            const windB = b.direction === activeWind ? -3 : 0;
             const terrainA = terrain[a.cell] === "brush" ? -1 : terrain[a.cell] === "rock" ? 2 : 0;
             const terrainB = terrain[b.cell] === "brush" ? -1 : terrain[b.cell] === "rock" ? 2 : 0;
             return windA + terrainA - (windB + terrainB);
@@ -197,7 +238,7 @@ export default function MissionFaro() {
       });
 
       const nextFire = Array.from(burning);
-      const detected = nextFire.some((cell) => isCovered(cell, sensors));
+      const detected = nextFire.some((cell) => isCovered(cell, connectedSensors));
       const nextTurn = turn + 1;
       setFireCells(nextFire);
       setTurn(nextTurn);
@@ -205,7 +246,9 @@ export default function MissionFaro() {
       if (detected) {
         const rawScore = 1350 - nextTurn * 120 - nextFire.length * 7 + coveredCells * 4;
         const nextScore = Math.max(100, Math.round(rawScore * config.multiplier));
+        const nextStars = nextTurn <= 2 && nextFire.length <= 5 ? 3 : nextTurn <= 4 && nextFire.length <= 12 ? 2 : 1;
         setScore(nextScore);
+        setStars(nextStars);
         setStatus("detected");
         const nextScores = [...scores, nextScore].sort((a, b) => b - a).slice(0, 5);
         setScores(nextScores);
@@ -219,7 +262,7 @@ export default function MissionFaro() {
       }
     }, 720 / speed);
     return () => window.clearTimeout(timer);
-  }, [config, coveredCells, difficulty, fireCells, paused, scores, sensors, speed, status, terrain, turn, wind]);
+  }, [activeWind, config, connectedSensors, coveredCells, difficulty, fireCells, paused, scores, speed, status, terrain, turn]);
 
   const toggleSensor = (cell: number) => {
     if (status !== "setup") return;
@@ -237,14 +280,15 @@ export default function MissionFaro() {
   };
 
   const start = () => {
-    if (sensors.length !== config.sensors) return;
+    if (!networkReady) return;
     const candidates = terrain
       .map((kind, cell) => ({ kind, cell }))
-      .filter(({ kind, cell }) => kind !== "water" && kind !== "rock" && !sensors.includes(cell));
+      .filter(({ kind, cell }) => kind !== "water" && kind !== "rock" && !isCovered(cell, sensors));
     const source = candidates[Math.floor(seededRandom(seed + 97)() * candidates.length)]?.cell ?? 0;
     setFireCells([source]);
     setTurn(0);
     setScore(0);
+    setStars(0);
     setPaused(false);
     setStatus("running");
   };
@@ -255,6 +299,7 @@ export default function MissionFaro() {
     setFireCells([]);
     setTurn(0);
     setScore(0);
+    setStars(0);
     setPaused(false);
     setSpeed(1);
     setStatus("setup");
@@ -263,7 +308,7 @@ export default function MissionFaro() {
   const controls = (mobile = false) => (
     <div className={cn("gap-2", mobile ? "mt-4 grid lg:hidden" : "mt-5 hidden lg:grid")}>
       {status === "setup" && (
-        <Button type="button" onClick={start} disabled={sensors.length !== config.sensors} variant="ember" size="lg" className="w-full">
+        <Button type="button" onClick={start} disabled={!networkReady} variant="ember" size="lg" className="w-full">
           <Play /> {t(copy.start)}
         </Button>
       )}
@@ -307,14 +352,20 @@ export default function MissionFaro() {
 
             <div className="mb-3 flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-background/50 px-3 py-2 text-xs sm:mb-4 sm:rounded-xl sm:text-sm">
               <span className="flex items-center gap-2 text-muted-foreground"><Wind className="h-4 w-4 text-primary-glow" />{t(copy.wind)}</span>
-              <strong className="font-mono text-accent">{directionArrows[wind]} {t(directionNames[wind])}</strong>
-              <span className="font-mono text-[0.65rem] text-muted-foreground">{t(copy.coverage)} {Math.round((coveredCells / 64) * 100)}%</span>
+              <strong className="font-mono text-accent">{directionArrows[activeWind]} {t(directionNames[activeWind])}</strong>
+              <span className="font-mono text-[0.65rem] text-muted-foreground">{t(copy.coverage)} {Math.round((coveredCells / (GRID_SIZE * GRID_SIZE)) * 100)}%</span>
             </div>
 
-            <div role="grid" aria-label={t(copy.forestLabel)} className="mission-grid grid grid-cols-8 gap-1 rounded-xl border border-primary/30 bg-gradient-forest p-1.5 sm:gap-1.5 sm:p-3">
+            <div className="mb-2 flex items-center justify-between rounded-lg border border-border/60 bg-background/40 px-3 py-2 text-[0.65rem] sm:text-xs">
+              <span className="font-mono uppercase tracking-wider text-muted-foreground">{t(copy.network)}</span>
+              <strong className={networkReady ? "text-primary-glow" : "text-accent"}>{connectedSensors.length}/{sensors.length || config.sensors} {t(copy.connected)} →</strong>
+            </div>
+
+            <div role="grid" aria-label={t(copy.forestLabel)} className="mission-grid grid grid-cols-9 gap-0.5 rounded-xl border border-primary/30 bg-gradient-forest p-1 sm:gap-1 sm:p-2">
               {terrain.map((kind, cell) => {
                 const sensor = sensors.includes(cell);
                 const fire = fireCells.includes(cell);
+                const connected = connectedSensors.includes(cell);
                 const covered = status === "setup" && isCovered(cell, sensors);
                 const label = fire ? t(copy.burningLabel) : sensor ? t(copy.sensorLabel) : t(terrainLabel(kind));
                 return (
@@ -332,7 +383,8 @@ export default function MissionFaro() {
                       kind === "rock" && "border-muted-foreground/25 bg-muted",
                       kind === "water" && "border-primary-glow/30 bg-primary-glow/10",
                       covered && "ring-1 ring-inset ring-primary-glow/40",
-                      sensor && "border-primary-glow bg-primary/50 shadow-[0_0_18px_hsl(var(--primary-glow)/0.3)]",
+                      sensor && connected && "border-primary-glow bg-primary/50 shadow-[0_0_18px_hsl(var(--primary-glow)/0.3)]",
+                      sensor && !connected && "border-destructive bg-destructive/20",
                       fire && "fire-cell border-accent bg-accent/30",
                     )}
                   >
@@ -370,11 +422,11 @@ export default function MissionFaro() {
             </div>
 
             <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-secondary">
-              <span className="block h-full rounded-full bg-primary-glow transition-[width] duration-500" style={{ width: `${(coveredCells / 64) * 100}%` }} />
+              <span className="block h-full rounded-full bg-primary-glow transition-[width] duration-500" style={{ width: `${(coveredCells / (GRID_SIZE * GRID_SIZE)) * 100}%` }} />
             </div>
 
             <div className="mt-5 rounded-xl border border-border/70 bg-background/60 p-4" aria-live="polite">
-              {status === "setup" && <p className="text-sm text-muted-foreground">{sensors.length === config.sensors ? t(copy.ready) : t(copy.setupHint)}</p>}
+              {status === "setup" && <p className="text-sm text-muted-foreground">{networkReady ? t(copy.ready) : sensors.length === config.sensors ? t(copy.networkHint) : t(copy.setupHint)}</p>}
               {status === "running" && <p className="ember-pulse text-sm text-accent">{paused ? t(copy.pause) : t(copy.running)}</p>}
               {status === "detected" && (
                 <div>
@@ -382,6 +434,7 @@ export default function MissionFaro() {
                   <h3 className="mt-3 font-display text-xl font-semibold">{t(copy.detected)}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(copy.detectedText)}</p>
                   <div className="mt-4 flex items-center justify-between font-mono text-xs uppercase tracking-wider text-accent"><span>{t(copy.score)}</span><strong>{score}</strong></div>
+                  <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground"><span>{t(copy.stars)}</span><strong className="tracking-widest text-accent">{"★".repeat(stars)}{"☆".repeat(3 - stars)}</strong></div>
                   <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground"><span>{t(copy.burned)}</span><strong>{fireCells.length}</strong></div>
                 </div>
               )}

@@ -10,6 +10,7 @@ import { CommandCenter } from "./CommandCenter";
 import { useParallax, useScrollReveal } from "./ScrollReveal";
 import { MediaLightbox } from "./MediaLightbox";
 import { RouteSignal } from "./RouteSignal";
+import { NextExperience } from "./NextExperience";
 
 export function PageLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
@@ -26,7 +27,10 @@ export function PageLayout({ children }: { children: ReactNode }) {
       <AlertStatus />
       <ScrollProgress />
       <Navbar />
-      <main ref={mainRef} key={pathname} className="page-enter flex-1">{children}</main>
+      <main ref={mainRef} key={pathname} className="page-enter flex-1">
+        {children}
+        <NextExperience />
+      </main>
       <Footer />
       <OfflineStatus />
       <MediaLightbox />

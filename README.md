@@ -29,6 +29,11 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 - centre de contrôle sous forme de panneau inférieur sur téléphone
 - médias 3D chargés uniquement à la demande pour réduire les données mobiles
 - jeu stratégique avec vent, terrains, trois difficultés, pause et vitesse réglable
+- chaîne LoRa obligatoire et départ du feu hors couverture dans Mission FARO
+- télémétrie simulée et comparaison « sans FARO / avec FARO » sur l'accueil
+- schéma d'architecture interactif à quatre zones
+- suggestion de page suivante à la fin de chaque parcours
+- option de réduction manuelle des animations dans le centre de contrôle
 
 ## Lancer le site en local
 

@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type PointerEvent } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Github, Flame, Brain, MapPinned, AlertTriangle, ShieldCheck, Target, Cpu } from "lucide-react";
+import { ArrowRight, Github, Flame, Brain, MapPinned, AlertTriangle, ShieldCheck, Target, Cpu, Gamepad2 } from "lucide-react";
 import { PageLayout } from "@/components/faro/PageLayout";
 import { SignalDemo } from "@/components/faro/SignalDemo";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { BRAND, HOME, LINKS } from "@/content/i18n";
 import heroImg from "@/assets/hero-forest.jpg";
 import { updatePointerGlow } from "@/lib/pointer-glow";
 import { AnimatedMetric } from "@/components/faro/AnimatedMetric";
+import { FaroComparison, LiveTelemetry } from "@/components/faro/ExperienceSections";
 
 const pillarIcons = [Flame, Brain, MapPinned];
 const promiseIcons = [AlertTriangle, ShieldCheck, Target];
@@ -100,11 +101,14 @@ export default function Index() {
                 </Link>
               </Button>
               <Button asChild variant="forest" size="xl" className="w-full sm:w-auto">
-                <a href={LINKS.github} target="_blank" rel="noreferrer">
-                  <Github /> {t(HOME.hero.ctaSecondary)}
-                </a>
+                <Link to="/mission-faro">
+                  <Gamepad2 /> {t({ fr: "Tester la simulation", en: "Try the simulation" })}
+                </Link>
               </Button>
             </div>
+            <a href={LINKS.github} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-accent">
+              <Github className="h-4 w-4" /> {t(HOME.hero.ctaSecondary)}
+            </a>
             <p className="mt-10 font-display text-sm italic text-accent/90">
               "{t(BRAND.slogan)}"
             </p>
@@ -192,6 +196,8 @@ export default function Index() {
           ))}
         </div>
       </section>
+
+      <LiveTelemetry />
 
       {/* HOW IT WORKS */}
       <section className="container py-24 md:py-32">
@@ -284,6 +290,8 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      <FaroComparison />
 
       <SignalDemo />
 

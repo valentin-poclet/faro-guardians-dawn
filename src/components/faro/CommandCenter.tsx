@@ -9,6 +9,7 @@ import {
   Layers3,
   RadioTower,
   RotateCcw,
+  Sparkles,
   Users,
   X,
 } from "lucide-react";
@@ -26,6 +27,9 @@ const copy = {
   experience: { fr: "Expérience interactive", en: "Interactive experience" },
   game: { fr: "Mission FARO", en: "FARO Mission" },
   gameText: { fr: "Placez les capteurs et détectez le feu à temps.", en: "Place the sensors and detect the fire in time." },
+  effects: { fr: "Animations du site", en: "Site animations" },
+  effectsOn: { fr: "Activées", en: "Enabled" },
+  effectsOff: { fr: "Réduites", en: "Reduced" },
   restart: { fr: "Revoir l'introduction", en: "Replay introduction" },
   close: { fr: "Fermer", en: "Close" },
 };
@@ -62,6 +66,10 @@ export function CommandCenter() {
   const { t } = useLang();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [reducedEffects, setReducedEffects] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try { return localStorage.getItem("faro.effects.reduced") === "true"; } catch { return false; }
+  });
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -83,6 +91,11 @@ export function CommandCenter() {
       document.body.style.overflow = previousOverflow;
     };
   }, [open]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("reduce-effects", reducedEffects);
+    try { localStorage.setItem("faro.effects.reduced", String(reducedEffects)); } catch { /* optional preference */ }
+  }, [reducedEffects]);
 
   const go = (path: string) => {
     setOpen(false);
@@ -161,6 +174,11 @@ export function CommandCenter() {
               <span className="mt-1 block text-sm text-muted-foreground">{t(copy.gameText)}</span>
             </span>
             <ArrowRight className="ml-auto h-4 w-4 shrink-0 text-accent transition-transform group-hover:translate-x-1" />
+          </button>
+          <button type="button" onClick={() => setReducedEffects((value) => !value)} className="mt-2 flex min-h-12 w-full items-center gap-3 rounded-xl border border-border/70 bg-background/40 px-4 py-3 text-left transition hover:border-accent/40">
+            <Sparkles className="h-4 w-4 text-accent" />
+            <span className="font-medium">{t(copy.effects)}</span>
+            <span className="ml-auto font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">{reducedEffects ? t(copy.effectsOff) : t(copy.effectsOn)}</span>
           </button>
         </section>
       </div>

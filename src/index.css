@@ -454,3 +454,30 @@ All colors MUST be HSL.
     transform: none;
   }
 }
+
+html.reduce-effects {
+  scroll-behavior: auto;
+}
+html.reduce-effects .scroll-reveal,
+html.reduce-effects .page-enter,
+html.reduce-effects .lightbox-enter,
+html.reduce-effects .route-signal,
+html.reduce-effects .route-signal-line,
+html.reduce-effects .fire-cell,
+html.reduce-effects .ember-pulse,
+html.reduce-effects [style*="float-particle"] {
+  animation: none !important;
+  transition-duration: 0.01ms !important;
+}
+html.reduce-effects .scroll-reveal {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+html.reduce-effects .parallax-media,
+html.reduce-effects [data-parallax] {
+  transform: none !important;
+}
+html.reduce-effects .route-signal {
+  display: none !important;
+}
