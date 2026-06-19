@@ -20,7 +20,6 @@ import { cn } from "@/lib/utils";
 
 const GRID_SIZE = 9;
 const SCORE_KEY = "faro.mission.v13.scores";
-const LORA_RANGE = 4;
 
 type GameStatus = "setup" | "running" | "detected" | "lost";
 type Difficulty = "easy" | "normal" | "hard";
@@ -48,15 +47,13 @@ const copy = {
   },
   mission: { fr: "Centre de mission", en: "Mission centre" },
   instructions: {
-    fr: "Chaque capteur surveille sa case et quatre voisines. Tous les nœuds doivent former une chaîne LoRa jusqu'à la passerelle située à l'est.",
-    en: "Each sensor monitors its cell and four neighbours. Every node must form a LoRa chain to the gateway located east of the map.",
+    fr: "Chaque capteur surveille sa case et quatre voisines. Placez-les librement en tenant compte du terrain et du vent.",
+    en: "Each sensor monitors its cell and four neighbours. Place them freely while considering terrain and wind.",
   },
   sensors: { fr: "Capteurs", en: "Sensors" },
   turn: { fr: "Propagation", en: "Spread" },
   best: { fr: "Record local", en: "Local best" },
   coverage: { fr: "Couverture", en: "Coverage" },
-  network: { fr: "Réseau LoRa", en: "LoRa network" },
-  connected: { fr: "connectés", en: "connected" },
   wind: { fr: "Vent", en: "Wind" },
   difficulty: { fr: "Difficulté", en: "Difficulty" },
   easy: { fr: "Exploration", en: "Explore" },
@@ -67,8 +64,7 @@ const copy = {
   pause: { fr: "Pause", en: "Pause" },
   resume: { fr: "Reprendre", en: "Resume" },
   speed: { fr: "Vitesse", en: "Speed" },
-  setupHint: { fr: "Placez tous les capteurs et reliez-les à la passerelle.", en: "Place every sensor and connect them to the gateway." },
-  networkHint: { fr: "Certains capteurs sont hors de portée du réseau LoRa.", en: "Some sensors are outside the LoRa network range." },
+  setupHint: { fr: "Placez tous les capteurs pour commencer.", en: "Place every sensor to begin." },
   ready: { fr: "Placement terminé. La simulation est prête.", en: "Placement complete. The simulation is ready." },
   running: { fr: "Le feu se propage…", en: "The fire is spreading…" },
   detected: { fr: "Alerte transmise !", en: "Alert transmitted!" },
@@ -139,33 +135,6 @@ function isCovered(cell: number, sensors: number[]) {
   });
 }
 
-function connectedNetwork(sensors: number[]) {
-  const gateway = { row: GRID_SIZE - 1, col: GRID_SIZE };
-  const connected = new Set<number>();
-  sensors.forEach((sensor) => {
-    const node = coordinates(sensor);
-    if (Math.abs(node.row - gateway.row) + Math.abs(node.col - gateway.col) <= LORA_RANGE) connected.add(sensor);
-  });
-
-  let changed = true;
-  while (changed) {
-    changed = false;
-    sensors.forEach((sensor) => {
-      if (connected.has(sensor)) return;
-      const node = coordinates(sensor);
-      const linked = Array.from(connected).some((other) => {
-        const relay = coordinates(other);
-        return Math.abs(node.row - relay.row) + Math.abs(node.col - relay.col) <= LORA_RANGE;
-      });
-      if (linked) {
-        connected.add(sensor);
-        changed = true;
-      }
-    });
-  }
-  return Array.from(connected);
-}
-
 function coverage(sensors: number[]) {
   return Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, cell) => cell)
     .filter((cell) => isCovered(cell, sensors)).length;
@@ -210,8 +179,6 @@ export default function MissionFaro() {
     return directions[(initial + shift) % directions.length];
   }, [difficulty, turn, wind]);
   const coveredCells = useMemo(() => coverage(sensors), [sensors]);
-  const connectedSensors = useMemo(() => connectedNetwork(sensors), [sensors]);
-  const networkReady = sensors.length === config.sensors && connectedSensors.length === sensors.length;
   const bestScore = scores[0] ?? 0;
 
   useEffect(() => {
@@ -238,7 +205,7 @@ export default function MissionFaro() {
       });
 
       const nextFire = Array.from(burning);
-      const detected = nextFire.some((cell) => isCovered(cell, connectedSensors));
+      const detected = nextFire.some((cell) => isCovered(cell, sensors));
       const nextTurn = turn + 1;
       setFireCells(nextFire);
       setTurn(nextTurn);
@@ -262,7 +229,7 @@ export default function MissionFaro() {
       }
     }, 720 / speed);
     return () => window.clearTimeout(timer);
-  }, [activeWind, config, connectedSensors, coveredCells, difficulty, fireCells, paused, scores, speed, status, terrain, turn]);
+  }, [activeWind, config, coveredCells, difficulty, fireCells, paused, scores, sensors, speed, status, terrain, turn]);
 
   const toggleSensor = (cell: number) => {
     if (status !== "setup") return;
@@ -280,7 +247,7 @@ export default function MissionFaro() {
   };
 
   const start = () => {
-    if (!networkReady) return;
+    if (sensors.length !== config.sensors) return;
     const candidates = terrain
       .map((kind, cell) => ({ kind, cell }))
       .filter(({ kind, cell }) => kind !== "water" && kind !== "rock" && !isCovered(cell, sensors));
@@ -308,7 +275,7 @@ export default function MissionFaro() {
   const controls = (mobile = false) => (
     <div className={cn("gap-2", mobile ? "mt-4 grid lg:hidden" : "mt-5 hidden lg:grid")}>
       {status === "setup" && (
-        <Button type="button" onClick={start} disabled={!networkReady} variant="ember" size="lg" className="w-full">
+        <Button type="button" onClick={start} disabled={sensors.length !== config.sensors} variant="ember" size="lg" className="w-full">
           <Play /> {t(copy.start)}
         </Button>
       )}
@@ -356,16 +323,10 @@ export default function MissionFaro() {
               <span className="font-mono text-[0.65rem] text-muted-foreground">{t(copy.coverage)} {Math.round((coveredCells / (GRID_SIZE * GRID_SIZE)) * 100)}%</span>
             </div>
 
-            <div className="mb-2 flex items-center justify-between rounded-lg border border-border/60 bg-background/40 px-3 py-2 text-[0.65rem] sm:text-xs">
-              <span className="font-mono uppercase tracking-wider text-muted-foreground">{t(copy.network)}</span>
-              <strong className={networkReady ? "text-primary-glow" : "text-accent"}>{connectedSensors.length}/{sensors.length || config.sensors} {t(copy.connected)} →</strong>
-            </div>
-
             <div role="grid" aria-label={t(copy.forestLabel)} className="mission-grid grid grid-cols-9 gap-0.5 rounded-xl border border-primary/30 bg-gradient-forest p-1 sm:gap-1 sm:p-2">
               {terrain.map((kind, cell) => {
                 const sensor = sensors.includes(cell);
                 const fire = fireCells.includes(cell);
-                const connected = connectedSensors.includes(cell);
                 const covered = status === "setup" && isCovered(cell, sensors);
                 const label = fire ? t(copy.burningLabel) : sensor ? t(copy.sensorLabel) : t(terrainLabel(kind));
                 return (
@@ -383,8 +344,7 @@ export default function MissionFaro() {
                       kind === "rock" && "border-muted-foreground/25 bg-muted",
                       kind === "water" && "border-primary-glow/30 bg-primary-glow/10",
                       covered && "ring-1 ring-inset ring-primary-glow/40",
-                      sensor && connected && "border-primary-glow bg-primary/50 shadow-[0_0_18px_hsl(var(--primary-glow)/0.3)]",
-                      sensor && !connected && "border-destructive bg-destructive/20",
+                      sensor && "border-primary-glow bg-primary/50 shadow-[0_0_18px_hsl(var(--primary-glow)/0.3)]",
                       fire && "fire-cell border-accent bg-accent/30",
                     )}
                   >
@@ -426,7 +386,7 @@ export default function MissionFaro() {
             </div>
 
             <div className="mt-5 rounded-xl border border-border/70 bg-background/60 p-4" aria-live="polite">
-              {status === "setup" && <p className="text-sm text-muted-foreground">{networkReady ? t(copy.ready) : sensors.length === config.sensors ? t(copy.networkHint) : t(copy.setupHint)}</p>}
+              {status === "setup" && <p className="text-sm text-muted-foreground">{sensors.length === config.sensors ? t(copy.ready) : t(copy.setupHint)}</p>}
               {status === "running" && <p className="ember-pulse text-sm text-accent">{paused ? t(copy.pause) : t(copy.running)}</p>}
               {status === "detected" && (
                 <div>

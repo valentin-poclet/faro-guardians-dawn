@@ -11,9 +11,16 @@ const copy = {
   },
   operational: { fr: "Réseau opérationnel", en: "Network operational" },
   temperature: { fr: "Température", en: "Temperature" },
+  temperatureHelp: { fr: "Mesure de l'air ambiant", en: "Ambient air reading" },
   humidity: { fr: "Humidité", en: "Humidity" },
-  anomaly: { fr: "Anomalie", en: "Anomaly" },
-  signal: { fr: "Signal LoRa", en: "LoRa signal" },
+  humidityHelp: { fr: "Humidité relative mesurée", en: "Measured relative humidity" },
+  anomaly: { fr: "Niveau d'anomalie", en: "Anomaly level" },
+  anomalyLow: { fr: "Faible", en: "Low" },
+  anomalyHelp: { fr: "Écart par rapport au comportement environnemental normal", en: "Difference from normal environmental behaviour" },
+  score: { fr: "Score technique", en: "Technical score" },
+  signal: { fr: "Qualité de la liaison radio", en: "Radio link quality" },
+  signalGood: { fr: "Bonne", en: "Good" },
+  signalHelp: { fr: "Communication LoRa entre les capteurs, sans Internet", en: "LoRa communication between sensors, without Internet" },
   compareEyebrow: { fr: "Pourquoi FARO ?", en: "Why FARO?" },
   compareTitle: { fr: "Réduire le temps entre le signal faible et la décision.", en: "Reduce the time between a weak signal and a decision." },
   without: { fr: "Sans réseau terrain", en: "Without a field network" },
@@ -39,11 +46,13 @@ export function LiveTelemetry() {
     return () => window.clearInterval(timer);
   }, []);
 
+  const anomalyScore = 0.12 + (tick % 5) * 0.01;
+  const signalDbm = -82 - (tick % 4);
   const values = [
-    { icon: CloudSun, label: t(copy.temperature), value: `${(27.1 + (tick % 4) * 0.2).toFixed(1)} °C` },
-    { icon: Activity, label: t(copy.humidity), value: `${42 - (tick % 3)} %` },
-    { icon: ShieldAlert, label: t(copy.anomaly), value: (0.12 + (tick % 5) * 0.01).toFixed(2) },
-    { icon: Wifi, label: t(copy.signal), value: `${-82 - (tick % 4)} dBm` },
+    { icon: CloudSun, label: t(copy.temperature), value: `${(27.1 + (tick % 4) * 0.2).toFixed(1)} °C`, help: t(copy.temperatureHelp), kind: "standard" },
+    { icon: Activity, label: t(copy.humidity), value: `${42 - (tick % 3)} %`, help: t(copy.humidityHelp), kind: "standard" },
+    { icon: ShieldAlert, label: t(copy.anomaly), value: t(copy.anomalyLow), help: t(copy.anomalyHelp), technical: `${t(copy.score)} · ${anomalyScore.toFixed(2)}`, progress: anomalyScore * 100, kind: "anomaly" },
+    { icon: Wifi, label: t(copy.signal), value: t(copy.signalGood), help: t(copy.signalHelp), technical: `${signalDbm} dBm`, kind: "signal" },
   ];
 
   return (
@@ -59,12 +68,24 @@ export function LiveTelemetry() {
             <span className="flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-wider text-primary-glow"><i className="h-2 w-2 rounded-full bg-primary-glow shadow-[0_0_12px_hsl(var(--primary-glow))]" />{t(copy.operational)}</span>
             <RadioTower className="h-4 w-4 text-accent" />
           </div>
-          <div className="grid grid-cols-2 gap-px bg-border/70">
-            {values.map(({ icon: Icon, label, value }) => (
+          <div className="grid grid-cols-1 gap-px bg-border/70 sm:grid-cols-2">
+            {values.map(({ icon: Icon, label, value, help, technical, progress, kind }) => (
               <div key={label} className="bg-card p-4 sm:p-6">
                 <Icon className="h-5 w-5 text-accent" />
                 <p className="mt-4 text-xs text-muted-foreground">{label}</p>
-                <p className="mt-1 font-mono text-lg font-semibold sm:text-xl">{value}</p>
+                <div className="mt-1 flex items-end justify-between gap-2">
+                  <p className={`font-mono text-lg font-semibold sm:text-xl ${kind === "anomaly" || kind === "signal" ? "text-primary-glow" : ""}`}>{value}</p>
+                  {technical && <span className="text-right font-mono text-[0.58rem] text-muted-foreground sm:text-[0.65rem]">{technical}</span>}
+                </div>
+                {kind === "anomaly" && (
+                  <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-secondary"><span className="block h-full rounded-full bg-primary-glow transition-[width] duration-700" style={{ width: `${progress}%` }} /></div>
+                )}
+                {kind === "signal" && (
+                  <div className="mt-3 flex h-4 items-end gap-1" aria-hidden="true">
+                    {[35, 55, 75, 100].map((height, index) => <i key={height} className={`w-1.5 rounded-sm ${index < 3 ? "bg-primary-glow" : "bg-secondary"}`} style={{ height: `${height}%` }} />)}
+                  </div>
+                )}
+                <p className="mt-3 text-[0.68rem] leading-relaxed text-muted-foreground sm:text-xs">{help}</p>
               </div>
             ))}
           </div>

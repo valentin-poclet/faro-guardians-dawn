@@ -34,6 +34,8 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 - schéma d'architecture interactif à quatre zones
 - suggestion de page suivante à la fin de chaque parcours
 - option de réduction manuelle des animations dans le centre de contrôle
+- télémétrie traduite en niveaux lisibles avec explications et valeurs techniques secondaires
+- placement entièrement libre des capteurs dans Mission FARO
 
 ## Lancer le site en local
 
