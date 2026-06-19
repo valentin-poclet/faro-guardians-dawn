@@ -4,12 +4,12 @@
 
 - Centre de contrôle accessible avec le bouton flottant `FARO`.
 - Raccourci clavier `Ctrl + K` sous Windows/Linux ou `Cmd + K` sous macOS.
-- Parcours jury guidé en cinq étapes : vision, fonctionnement, prototype, équipe et preuves.
 - Raccourcis directs vers les cinq pages du site.
 - Commande permettant de rejouer l'introduction immersive.
 - Animation progressive des chiffres clés lors de leur apparition à l'écran.
 - Transition légère entre les pages.
 - Prise en charge de `prefers-reduced-motion` pour limiter les animations si nécessaire.
+- Révélation progressive des sections, cartes et médias au fil du défilement sur toutes les pages.
 
 ## Fichiers principaux ajoutés
 

@@ -121,6 +121,24 @@ All colors MUST be HSL.
     to { opacity: 1; transform: translateY(0); }
   }
 
+  .scroll-reveal {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(44px) scale(0.988);
+    transition:
+      opacity 800ms var(--ease-out-soft) var(--reveal-delay, 0ms),
+      filter 800ms var(--ease-out-soft) var(--reveal-delay, 0ms),
+      transform 900ms var(--ease-out-soft) var(--reveal-delay, 0ms);
+    will-change: opacity, filter, transform;
+  }
+
+  .scroll-reveal.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+    will-change: auto;
+  }
+
   .command-trigger::before {
     content: "";
     position: absolute;
@@ -227,7 +245,15 @@ All colors MUST be HSL.
   }
 
   .page-enter,
+  .scroll-reveal,
   .command-trigger::before {
     animation: none !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

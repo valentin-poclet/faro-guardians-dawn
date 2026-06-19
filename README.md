@@ -16,8 +16,8 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 - consultation hors connexion des pages et ressources deja chargees
 - navigation mobile et barre de progression de lecture
 - centre de contrôle accessible avec `Ctrl/Cmd + K`
-- parcours jury guidé en cinq étapes
 - chiffres clés animés et transitions de page respectant l'accessibilité
+- révélation progressive des sections et des cartes pendant le défilement
 
 ## Lancer le site en local
 

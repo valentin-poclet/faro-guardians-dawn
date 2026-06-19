@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
@@ -7,9 +7,12 @@ import { ScrollProgress } from "./ScrollProgress";
 import { IntroSequence } from "./IntroSequence";
 import { AlertStatus } from "./AlertStatus";
 import { CommandCenter } from "./CommandCenter";
+import { useScrollReveal } from "./ScrollReveal";
 
 export function PageLayout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+  useScrollReveal(mainRef, pathname);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [pathname]);
@@ -19,7 +22,7 @@ export function PageLayout({ children }: { children: ReactNode }) {
       <AlertStatus />
       <ScrollProgress />
       <Navbar />
-      <main key={pathname} className="page-enter flex-1">{children}</main>
+      <main ref={mainRef} key={pathname} className="page-enter flex-1">{children}</main>
       <Footer />
       <OfflineStatus />
       <CommandCenter />
