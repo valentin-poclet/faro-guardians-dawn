@@ -9,7 +9,7 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-border/60 bg-background/60">
-      <div className="container grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container grid gap-9 py-12 sm:py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-10">
         <div className="space-y-4">
           <Logo />
           <p className="max-w-sm text-sm text-muted-foreground">{t(FOOTER.about)}</p>
@@ -58,7 +58,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-border/60">
-        <div className="container flex flex-col items-start justify-between gap-2 py-5 text-xs text-muted-foreground md:flex-row md:items-center">
+        <div className="safe-bottom container flex flex-col items-start justify-between gap-2 py-5 text-xs leading-relaxed text-muted-foreground md:flex-row md:items-center">
           <p>© {year} FARO — {t(BRAND.school)}. {t(FOOTER.rights)}</p>
           <p className="font-mono uppercase tracking-widest">Fire Area Risk Observatory</p>
         </div>

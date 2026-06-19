@@ -138,7 +138,7 @@ export default function Architecture() {
                           muted
                           loop
                           playsInline
-                          preload="metadata"
+                          preload="none"
                           poster={media.poster}
                           aria-label={`${t(item.title)} - ${t(ARCH.media.videoLabel)}`}
                           className="h-full w-full object-contain"

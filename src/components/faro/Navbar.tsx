@@ -38,7 +38,7 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+          "safe-top fixed inset-x-0 top-0 z-50 transition-all duration-500",
           scrolled
             ? "border-b border-border/60 bg-background/80 backdrop-blur-xl"
             : "bg-transparent",
@@ -85,7 +85,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border/60 text-foreground md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-border/60 bg-background/50 text-foreground backdrop-blur md:hidden"
           aria-label={open ? t(UI.closeMenu) : t(UI.openMenu)}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
@@ -102,7 +102,7 @@ export function Navbar() {
           open
             ? "visible opacity-100"
             : "invisible opacity-0",
-          "fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-border/60 bg-background/95 backdrop-blur-xl transition-opacity duration-300",
+          "safe-bottom fixed inset-x-0 bottom-0 top-[calc(4rem+env(safe-area-inset-top))] z-40 overflow-y-auto border-t border-border/60 bg-background/95 backdrop-blur-xl transition-opacity duration-300",
         )}
       >
         <ul className="container flex flex-col gap-1 py-6">
@@ -114,7 +114,7 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    "block rounded-lg px-4 py-3 text-lg font-medium",
+                    "block min-h-12 rounded-xl px-4 py-3 text-lg font-medium",
                     isActive
                       ? "bg-secondary text-foreground"
                       : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground",

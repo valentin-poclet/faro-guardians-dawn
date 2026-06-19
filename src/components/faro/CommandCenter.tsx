@@ -75,6 +75,15 @@ export function CommandCenter() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
   const go = (path: string) => {
     setOpen(false);
     navigate(path);
@@ -94,7 +103,7 @@ export function CommandCenter() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="command-trigger fixed bottom-5 right-5 z-40 flex h-12 items-center gap-2 rounded-full border border-accent/40 bg-background/80 px-4 text-sm font-medium text-foreground shadow-ember backdrop-blur-xl transition hover:-translate-y-1 hover:border-accent md:bottom-7 md:right-7"
+        className="command-trigger fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 flex h-12 items-center gap-2 rounded-full border border-accent/40 bg-background/80 px-4 text-sm font-medium text-foreground shadow-ember backdrop-blur-xl transition hover:-translate-y-1 hover:border-accent md:bottom-7 md:right-7"
         aria-label={t(copy.open)}
       >
         <Command className="h-4 w-4 text-accent" />
@@ -104,7 +113,7 @@ export function CommandCenter() {
 
       <div
         className={cn(
-          "fixed inset-0 z-[80] flex items-end justify-center bg-black/60 p-3 backdrop-blur-sm transition md:items-center md:p-6",
+          "fixed inset-0 z-[80] flex items-end justify-center bg-black/60 p-0 backdrop-blur-sm transition sm:p-3 md:items-center md:p-6",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
         onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}
@@ -115,7 +124,7 @@ export function CommandCenter() {
           aria-modal="true"
           aria-labelledby="command-title"
           className={cn(
-            "relative max-h-[88svh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-border/80 bg-card p-5 shadow-deep transition duration-300 md:p-7",
+            "safe-bottom relative max-h-[92svh] w-full max-w-2xl overflow-y-auto rounded-t-3xl border border-border/80 bg-card p-5 shadow-deep transition duration-300 sm:rounded-2xl md:p-7",
             open ? "translate-y-0 scale-100" : "translate-y-5 scale-[0.98]",
           )}
         >

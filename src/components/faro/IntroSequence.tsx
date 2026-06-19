@@ -107,18 +107,18 @@ export function IntroSequence() {
         <SkipForward className="h-4 w-4" /> {t(copy.skip)}
       </button>
 
-      <div className="relative z-10 flex min-h-[100svh] items-center justify-center px-5 py-16 text-center">
+      <div className="safe-bottom safe-top relative z-10 flex min-h-[100svh] items-center justify-center px-4 py-12 text-center sm:px-5 sm:py-16">
         <div className="max-w-xl">
-          <div className={cn("mx-auto flex h-28 w-28 items-center justify-center rounded-2xl border bg-white p-2 transition-all duration-700", phase === "idle" ? "border-border shadow-deep" : "scale-105 border-accent shadow-ember")}>
+          <div className={cn("mx-auto flex h-24 w-24 items-center justify-center rounded-2xl border bg-white p-2 transition-all duration-700 sm:h-28 sm:w-28", phase === "idle" ? "border-border shadow-deep" : "scale-105 border-accent shadow-ember")}>
             <img src="/faro-logo.png" alt="FARO" className="h-full w-full object-contain" />
           </div>
           <p aria-live="polite" className="mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-accent">
             <Radio className={cn("h-4 w-4", phase !== "idle" && "animate-pulse")} />
             {phase === "idle" ? t(copy.status) : phase === "activating" ? t(copy.activating) : t(copy.ready)}
           </p>
-          <h1 id="faro-intro-title" className="mt-5 font-display text-4xl font-bold md:text-6xl">{t(copy.title)}</h1>
+          <h1 id="faro-intro-title" className="mt-5 font-display text-3xl font-bold sm:text-4xl md:text-6xl">{t(copy.title)}</h1>
           <p className="mx-auto mt-5 max-w-md leading-relaxed text-muted-foreground md:text-lg">{t(copy.text)}</p>
-          <Button autoFocus onClick={activate} disabled={phase !== "idle"} variant="ember" size="xl" className="mt-9 min-w-56">
+          <Button autoFocus onClick={activate} disabled={phase !== "idle"} variant="ember" size="xl" className="mt-8 w-full min-w-0 sm:mt-9 sm:w-auto sm:min-w-56">
             <Power /> {phase === "idle" ? t(copy.activate) : phase === "activating" ? t(copy.activating) : t(copy.ready)}
           </Button>
         </div>

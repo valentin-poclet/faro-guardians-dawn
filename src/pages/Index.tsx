@@ -84,22 +84,22 @@ export default function Index() {
               <span className="h-px w-8 bg-accent" />
               {t(HOME.hero.eyebrow)}
             </p>
-            <h1 className="font-display text-5xl font-bold leading-[1.02] tracking-tight md:text-7xl">
+            <h1 className="font-display text-[2.55rem] font-bold leading-[1.02] tracking-tight sm:text-5xl md:text-7xl">
               {t(HOME.hero.title)}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg md:mt-6 md:text-xl">
               {t(HOME.hero.subtitle)}
             </p>
             <p className="mt-5 inline-flex rounded-full border border-foreground/20 bg-background/40 px-4 py-2 font-mono text-[0.68rem] uppercase tracking-wider text-foreground/75 backdrop-blur-sm">
               {t(HOME.hero.status)}
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button asChild variant="ember" size="xl">
+              <Button asChild variant="ember" size="xl" className="w-full sm:w-auto">
                 <Link to="/projet">
                   {t(HOME.hero.ctaPrimary)} <ArrowRight />
                 </Link>
               </Button>
-              <Button asChild variant="forest" size="xl">
+              <Button asChild variant="forest" size="xl" className="w-full sm:w-auto">
                 <a href={LINKS.github} target="_blank" rel="noreferrer">
                   <Github /> {t(HOME.hero.ctaSecondary)}
                 </a>
@@ -302,7 +302,7 @@ export default function Index() {
           <video
             controls
             playsInline
-            preload="metadata"
+            preload="none"
             poster="/media/project/faro-presentation-poster.jpg"
             className="aspect-video w-full bg-black object-contain"
           >

@@ -18,13 +18,13 @@ export default function Equipe() {
     <PageLayout>
       <PageHero eyebrow={t({ fr: "03 — Équipe", en: "03 — Team" })} title={t(TEAM.title)} subtitle={t(TEAM.subtitle)} />
 
-      <section className="container py-20 md:py-28">
+      <section className="container py-16 md:py-28">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {TEAM.members.map((m) => (
             <article
               key={m.name}
               onPointerMove={updatePointerGlow}
-              className="pointer-glow group relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-border/70 bg-card p-7 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/60"
+              className="pointer-glow group relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-accent/60 sm:p-7"
             >
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-gradient-glow opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative flex items-center gap-4">

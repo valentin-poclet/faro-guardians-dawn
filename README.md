@@ -25,6 +25,10 @@ Le site presente le projet a un jury, a des visiteurs de stand et a des personne
 - mini-jeu bilingue « Mission FARO », accessible uniquement depuis le centre de contrôle
 - meilleur score du jeu conservé localement sur l'appareil
 - sortie d'introduction superposée à l'accueil pour une transition plus fluide
+- mise en page mobile-first testable dès 320 px et respect des zones de sécurité iPhone
+- centre de contrôle sous forme de panneau inférieur sur téléphone
+- médias 3D chargés uniquement à la demande pour réduire les données mobiles
+- jeu stratégique avec vent, terrains, trois difficultés, pause et vitesse réglable
 
 ## Lancer le site en local
 

@@ -18,13 +18,13 @@ export default function Ressources() {
     <PageLayout>
       <PageHero eyebrow={t({ fr: "04 — Ressources", en: "04 — Resources" })} title={t(RESOURCES.title)} subtitle={t(RESOURCES.intro)} />
 
-      <section className="container py-20 md:py-28">
+      <section className="container py-16 md:py-28">
         <div className="grid gap-6">
           {RESOURCES.blocks.map((b, i) => (
             <article
               key={i}
               onPointerMove={updatePointerGlow}
-              className="pointer-glow grid items-center gap-8 overflow-hidden rounded-2xl border border-border/70 bg-card p-8 shadow-card transition-transform duration-300 hover:-translate-y-1 md:grid-cols-[1fr_auto] md:p-12"
+              className="pointer-glow grid items-center gap-6 overflow-hidden rounded-2xl border border-border/70 bg-card p-5 shadow-card transition-transform duration-300 hover:-translate-y-1 sm:p-8 md:grid-cols-[1fr_auto] md:gap-8 md:p-12"
             >
               <div className="max-w-2xl">
                 <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
@@ -37,7 +37,7 @@ export default function Ressources() {
 
               </div>
 
-              <Button asChild variant="ember" size="lg">
+              <Button asChild variant="ember" size="lg" className="w-full md:w-auto">
                 <a href={b.href} target="_blank" rel="noreferrer">
                   {resourceIcon(b.kind)}
                   {t(b.cta)}
