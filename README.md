@@ -1,135 +1,80 @@
-# FARO - Fire Area Risk Observatory
+# FARO — Fire Area Risk Observatory
 
-Site vitrine bilingue du projet FARO, realise par six etudiants ingenieurs de 3e annee a ESIEE Paris.
+Site web interactif de présentation du projet **FARO**, un système de détection précoce des feux de forêt basé sur des capteurs IoT, une IA embarquée, un réseau LoRa autonome et une simulation de propagation.
 
-Le site presente le projet a un jury, a des visiteurs de stand et a des personnes non specialistes : detection precoce des feux de foret, reseau LoRa maille, IA embarquee et simulation predictive de propagation.
+Ce site a été conçu pour présenter le projet de manière claire, immersive et accessible lors de la Journée des Projets à ESIEE Paris, aussi bien pour un jury technique que pour des visiteurs non spécialistes.
 
-## Fonctionnalites principales
+## Aperçu
 
-- contenu complet en francais et en anglais
-- demonstration interactive de la chaine de detection
-- sequence d'ouverture "Activer le reseau"
-- scanner forestier interactif et mode d'alerte global
-- photos du prototype et videos de modelisation 3D
-- video de presentation avec son
-- installation possible comme application web
-- consultation hors connexion des pages et ressources deja chargees
-- navigation mobile et barre de progression de lecture
-- centre de contrôle accessible avec `Ctrl/Cmd + K`
-- chiffres clés animés et transitions de page respectant l'accessibilité
-- révélation progressive des sections et des cartes pendant le défilement
-- transition cinématique plein écran après l'activation du réseau
-- zoom plein écran des photos et du schéma d'architecture
-- progression technique active sur la page Projet
-- parallaxe discret sur la forêt et balayage visuel entre les pages
-- mini-jeu bilingue « Mission FARO », accessible uniquement depuis le centre de contrôle
-- meilleur score du jeu conservé localement sur l'appareil
-- sortie d'introduction superposée à l'accueil pour une transition plus fluide
-- mise en page mobile-first testable dès 320 px et respect des zones de sécurité iPhone
-- centre de contrôle sous forme de panneau inférieur sur téléphone
-- médias 3D chargés uniquement à la demande pour réduire les données mobiles
-- jeu stratégique avec vent, terrains, trois difficultés, pause et vitesse réglable
-- chaîne LoRa obligatoire et départ du feu hors couverture dans Mission FARO
-- télémétrie simulée et comparaison « sans FARO / avec FARO » sur l'accueil
-- schéma d'architecture interactif à quatre zones
-- suggestion de page suivante à la fin de chaque parcours
-- option de réduction manuelle des animations dans le centre de contrôle
-- télémétrie traduite en niveaux lisibles avec explications et valeurs techniques secondaires
-- placement entièrement libre des capteurs dans Mission FARO
-- page Architecture sécurisée et allégée pour les téléphones
-- vidéos 3D chargées uniquement après une action du visiteur
-- schéma épuré sans pastilles numérotées ni panneau explicatif noir
+FARO vise à détecter un départ de feu avant qu’il ne soit visuellement important, grâce à un réseau de capteurs autonomes capables de mesurer leur environnement, d’analyser les anomalies localement et de transmettre une alerte sans dépendre d’Internet.
 
-## Lancer le site en local
+Le site présente :
 
-```bash
-npm install
-npm run dev
-```
+- le fonctionnement global du système ;
+- l’architecture matérielle ;
+- les composants utilisés ;
+- les vidéos de modélisation 3D ;
+- la vidéo de présentation du projet ;
+- l’équipe ;
+- les ressources techniques ;
+- une expérience interactive avec mini-jeu et démonstrations visuelles.
 
-Puis ouvrir l'adresse affichee dans le terminal.
+## Mon rôle sur ce site
 
-## Modifier les textes
+J’ai conçu et développé ce site web afin de valoriser le projet FARO de manière professionnelle et interactive.
 
-La majorite des textes visibles sont centralises ici :
+Mes contributions principales sur le site :
 
-```text
-src/content/i18n.ts
-```
+- conception de l’identité visuelle web autour du logo FARO ;
+- développement de l’interface React ;
+- création d’une expérience immersive avec animation d’introduction ;
+- mise en place d’un site responsive et mobile-first ;
+- intégration des médias : images, vidéos, schéma d’architecture et documents PDF ;
+- création d’un centre de contrôle interactif ;
+- développement du mini-jeu “Mission FARO” ;
+- ajout d’animations au scroll et d’interactions visuelles ;
+- optimisation de l’expérience mobile pour un accès via QR code ;
+- organisation du contenu pour rendre le projet compréhensible par un public non technique.
 
-Ce fichier contient les versions francaise et anglaise :
+## Fonctionnalités principales
 
-```ts
-title: {
-  fr: "Titre en francais",
-  en: "English title",
-}
-```
+- Site bilingue français / anglais
+- Navigation entre plusieurs pages
+- Animation d’introduction “Activer le réseau”
+- Centre de contrôle interactif
+- Mini-jeu Mission FARO
+- Vidéo de présentation intégrée
+- Schéma d’architecture et médias du prototype
+- Présentation détaillée des composants
+- Ressources téléchargeables
+- Expérience optimisée pour mobile
+- Effets de scroll reveal
+- Mode hors ligne après première visite
 
-## Modifier les membres de l'equipe
-
-Les cartes de l'equipe se trouvent dans :
-
-```text
-src/content/i18n.ts
-```
-
-Chercher la constante `TEAM`, puis modifier les noms, roles et biographies.
-
-## Modifier les liens
-
-Les liens GitHub et Google Drive se trouvent dans :
-
-```text
-src/content/i18n.ts
-```
-
-Chercher la constante `LINKS`.
-
-## Images et videos
-
-Les medias du prototype sont ranges dans :
-
-```text
-public/media/components/
-public/media/architecture/
-```
-
-Les associations entre photos, videos 3D et textes sont definies dans :
-
-```text
-src/pages/Architecture.tsx
-src/content/i18n.ts
-```
-
-Les pages principales sont dans :
-
-```text
-src/pages/
-```
-
-Le logo officiel et les documents telechargeables sont places dans :
-
-```text
-public/faro-logo.png
-public/documents/
-```
-
-Pour une video de plusieurs minutes, preferer un lecteur YouTube non repertorie ou un lien Drive integre afin de ne pas alourdir le depot GitHub.
-
-## Pages du site
-
-- Accueil : `src/pages/Index.tsx`
-- Projet : `src/pages/Projet.tsx`
-- Architecture : `src/pages/Architecture.tsx`
-- Equipe : `src/pages/Equipe.tsx`
-- Ressources : `src/pages/Ressources.tsx`
-
-## Technologies
+## Technologies utilisées
 
 - React
-- Vite
 - TypeScript
+- Vite
 - Tailwind CSS
-- shadcn/ui
-- lucide-react
+- HTML / CSS
+- JavaScript
+- GitHub Pages / Lovable
+
+## Structure du site
+
+Le site est organisé autour de plusieurs pages :
+
+- **Accueil** : présentation immersive du projet FARO
+- **Projet** : explication du fonctionnement technique
+- **Architecture** : composants, schéma et prototype
+- **Équipe** : rôles et contributions des membres
+- **Ressources** : GitHub, Drive, affiche, rapport éthique et documents
+- **Mission FARO** : mini-jeu interactif accessible depuis le centre de contrôle
+
+## Lancer le projet en local
+
+Cloner le dépôt :
+
+```bash
+git clone https://github.com/valentin-poclet/faro-guardians-dawn.git
